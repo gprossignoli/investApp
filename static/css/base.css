@@ -1,0 +1,55 @@
+* {
+    border: solid black 1px;
+}
+
+
+html,body {
+    height: 100%;
+}
+
+#logo{
+    border-radius: 30%;
+    margin-left: 1em;
+}
+
+#fecha {
+    color: yellow;
+}
+
+.login{
+    text-decoration: none;
+    margin: 1em;
+}
+
+#background{
+    background: rgb(255,203,0);
+    background: linear-gradient(180deg, rgba(255,203,0,1) 1%, rgba(121,119,9,1) 49%, rgba(0,0,0,1) 100%); 
+        /* Full height */
+    height: 100%;
+}
+
+#legal_advise {
+    background-color: black;
+    color: darkred;
+}
+
+.list_item{
+    height: 3em;
+    
+    background-color: gray;
+    border-radius: 30%;
+    margin-left: 2em;
+    margin-right: 10em;
+}
+
+.list_item a{
+    color: darkblue;
+}
+
+#search_button{
+    margin-top: 1em;
+}
+
+#second_navbar{
+    margin-top: 0.5em;
+}
