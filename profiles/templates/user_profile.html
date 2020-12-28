@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+perfil de {{ user_name }}
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'profiles/css/user_profile.css' %}" rel="stylesheet">
+
+<div class="row">
+    <div class="col">
+        <ul class="list-group" id="profile">
+            <li class="list-group-item profile_info">Cras justo odio</li>
+            <li class="list-group-item profile_info">Dapibus ac facilisis in</li>
+            <li class="list-group-item profile_info">Morbi leo risus</li>
+            <li class="list-group-item profile_info">Porta ac consectetur ac</li>
+            <li class="list-group-item profile_info">Vestibulum at eros</li>
+        </ul>
+    </div>
+    <div class="col">
+        <div class="row">
+            <div class="col" id="favorite_market_summary">
+                <div class="row">
+                    <div class="col" id="market_title">
+                        <h1>IBEX 35</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col market_index_data">
+                        <span class="price_row">Puntos</span>
+                        <span class="index_last_value">8.155,60</span>
+                    </div>
+                    <div class="col market_index_data">
+                        <span class="price_row">Variación</span>
+                        <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
+                                src={{ index_growth }}>
+                            <span class="market_index_value">+0,54%</span>
+                        </div>
+
+                    </div>
+                    <div class="col market_index_data">
+                        <span class="price_row">Puntos</span>
+                        <span class="index_points_value">+44,10</span>
+                        <span>pts</span>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="w-100"></div>
+            <div class="col" id="risk_lvl_col">
+                <div class="risk_lvl">
+                    <div class="risk">
+                        <h1 id="user_risk_lvl">{{user_risk_lvl}}<span>/{{risk_max_lvl}}</span></h1>
+                    </div>
+                    <div class="risk_lvl_info">
+                        <p>Este valor es el nivel del riesgo que usted esta dispuesto a tomar como inversor,
+                            siendo {{min_risk_lvl}}/{{risk_max_lvl}} el menor riesgo posible y
+                            {{risk_max_lvl}}/{{risk_max_lvl}} el mayor riesgo disponible.
+                        </p>
+                        <p>
+                            Toda inversión tiene un riesgo asociado. Este riesgo se define como la probabilidad de
+                            que el
+                            rendimiento sea menor al esperado. <br>
+                            En general, las inversiones con mayor rendimiento esperado, tienen mayor riesgo
+                            asociado.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

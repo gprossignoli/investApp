@@ -1,0 +1,39 @@
+#profile {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.profile_info {
+ background-color: #212529;
+ color: honeydew;
+}
+
+#risk_lvl_col{
+    padding: 1em;
+}
+
+.risk_lvl {
+    display: flex;
+    flex-direction: row;
+    background-color: #212529;
+    color: honeydew;
+    padding: 0.5em;
+}
+
+.risk {
+    margin-right: 0.3em;
+}
+
+.risk #user_risk_lvl{
+    margin-bottom: 1em;
+}
+
+#favorite_market_summary{
+    background-color: #212529;
+    color: honeydew;
+    margin: 1em;
+}
+
+.market_index_value {
+    padding-left: 0em;
+}

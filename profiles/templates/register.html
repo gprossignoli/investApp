@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+Register form
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'profiles/css/register.css' %}" rel="stylesheet">
+
+<div class=".container">
+    <div class="row justify-content-center">
+        <div id="form" class="col-md-4">
+            <form action="" method="POST" class="post-form">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

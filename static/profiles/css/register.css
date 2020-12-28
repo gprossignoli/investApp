@@ -1,0 +1,15 @@
+
+#form {
+    width: 10em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    background-color: #343a40;
+}
+
+#form .btn{
+    background-color: gray;
+}
+
+#form label{
+    background-color: gray;
+}
