@@ -4,5 +4,6 @@ from profiles.presentation import views
 
 urlpatterns = [
     path('register/', views.register, name='register_form'),
-    path('user', views.user, name='user_profile'),
+    path('login/', views.user_login, name='user_login'),
+    path('user', views.user_profile, name='user_profile'),
 ]

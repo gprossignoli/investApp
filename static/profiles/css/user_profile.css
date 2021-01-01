@@ -37,3 +37,7 @@
 .market_index_value {
     padding-left: 0em;
 }
+
+#risk_lvl_buttons{
+    display: block; 
+}

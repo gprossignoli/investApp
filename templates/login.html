@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Register form
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'profiles/css/login.css' %}" rel="stylesheet">
+
+<div class=".container">
+    <div class="row justify-content-center">
+        <div id="form" class="col-md-4">
+            <form action="" method="POST" class="post-form">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}
