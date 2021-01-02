@@ -29,10 +29,15 @@ body {
 .list_item{
     background-color: gray;
     border-radius: 30%;
+    margin-left: 2em;
 }
 
-.list_item a{
-    color: darkblue;
+.list_item a p{
+    margin: 0;
+    color: black;
+}
+.list_item a p:hover{
+    color: gold;
 }
 
 #search_button{

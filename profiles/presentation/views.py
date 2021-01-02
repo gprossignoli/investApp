@@ -1,18 +1,19 @@
-from django.apps import config
-from django.contrib.auth import authenticate, login
+import datetime
+
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpRequest
-from django.template import loader
+from django.http import HttpResponse
 
-from profiles.business.models import UserProfile
 from profiles.presentation.forms import RegisterForm
+from investapp import settings as st
 
 
 def register(request):
     if request.method == 'GET':
         form = RegisterForm()
-        return render(request, 'register.html', {'form': form})
+        return render(request, 'register.html', {'time_stamp': datetime.datetime.today(),
+                                                 'form': form, 'user_already_logged': False})
 
     elif request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -23,13 +24,15 @@ def register(request):
             user = authenticate(username=new_user.username, password=raw_password)
             return redirect('user/{}'.format(user.id))
 
-        return render(request, 'register.html', {'form': form})
+        return render(request, 'register.html', {'time_stamp': datetime.datetime.today(),
+                                                 'form': form, 'user_already_logged': False})
 
 
 def user_login(request):
     if request.method == "GET":
         form = AuthenticationForm()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'login.html', {'time_stamp': datetime.datetime.today(),
+                                              'form': form, 'user_already_logged': False})
 
     elif request.method == "POST":
         form = AuthenticationForm(data=request.POST)
@@ -43,20 +46,28 @@ def user_login(request):
                 login(request, user)
                 return redirect('user_profile')
 
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'login.html', {'time_stamp': datetime.datetime.today(),
+                                              'form': form, 'user_already_logged': False})
 
 
-# TODO user id debe ser UUID para evitar identificadores contiguos
 def user_profile(request):
     if request.method != 'GET':
         return HttpResponse(status=405)
 
     if request.user.is_authenticated:
         user = request.user
-        return render(request, 'user_profile.html', {'user_name': user.username, 'user_risk_lvl': 1,
-                                                     'risk_max_lvl': 6, 'min_risk_lvl': 1,
+        return render(request, 'user_profile.html', {'time_stamp': datetime.datetime.today(),
+                                                     'user_already_logged': True,
+                                                     'user_name': user.username, 'user_risk_lvl': user.risk_level   ,
+                                                     'risk_max_lvl': st.RISK_MAX_LVL,
+                                                     'min_risk_lvl': st.RISK_MIN_LVL,
                                                      'index_growth': '../static/images/index_up.svg'})
     else:
-        redirect('register')
+        return redirect('register')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect("index")
 
 

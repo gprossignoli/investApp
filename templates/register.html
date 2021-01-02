@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Register form
+Pagina de registro
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,8 @@ Register form
 <div class=".container">
     <div class="row justify-content-center">
         <div id="form" class="col-md-4">
+            <h1> Formulario de registro </h1>
+
             <form action="" method="POST" class="post-form">{% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="save btn btn-default">Enviar</button>
