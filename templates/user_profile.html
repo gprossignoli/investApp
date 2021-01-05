@@ -11,11 +11,8 @@ perfil de {{ user_name }}
 <div class="row">
     <div class="col">
         <ul class="list-group" id="profile">
-            <li class="list-group-item profile_info">Cras justo odio</li>
-            <li class="list-group-item profile_info">Dapibus ac facilisis in</li>
-            <li class="list-group-item profile_info">Morbi leo risus</li>
-            <li class="list-group-item profile_info">Porta ac consectetur ac</li>
-            <li class="list-group-item profile_info">Vestibulum at eros</li>
+            <li class="list-group-item profile_info">Nombre de usuario: {{user.username }}</li>
+            <li class="list-group-item profile_info">email: {{user.email }}</li>
         </ul>
     </div>
     <div class="col">
@@ -29,19 +26,29 @@ perfil de {{ user_name }}
                 <div class="row">
                     <div class="col market_index_data">
                         <span class="price_row">Puntos</span>
-                        <span class="index_last_value">8.155,60</span>
+                        <span class="index_last_value">{{index_last_value}}</span>
                     </div>
                     <div class="col market_index_data">
                         <span class="price_row">Variación</span>
-                        <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
-                                src={{ index_growth }}>
-                            <span class="market_index_value">+0,54%</span>
-                        </div>
-
+                        {% if index_growth %}
+                            <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
+                                    src="{% static 'images/index_up.svg' %}">
+                                <span class="market_index_value">+{{index_value}}%</span>
+                            </div>
+                        {% else %}
+                            <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
+                                    src="{% static 'images/index_down.svg' %}">
+                                <span class="market_index_value">{{index_value}}%</span>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="col market_index_data">
                         <span class="price_row">Puntos</span>
-                        <span class="index_points_value">+44,10</span>
+                        {% if index_growth %}
+                            <span class="index_points_value">+{{index_points_value}}</span>
+                        {% else %}
+                            <span class="index_points_value">{{index_points_value}}</span>
+                        {% endif %}
                         <span>pts</span>
                     </div>
                 </div>
@@ -50,23 +57,25 @@ perfil de {{ user_name }}
             <div class="w-100"></div>
             <div class="col" id="risk_lvl_col">
                 <div class="risk_lvl">
-                    <div class="risk">
-                        <h1 id="user_risk_lvl">{{user_risk_lvl}}<span>/{{risk_max_lvl}}</span></h1>
-                    
-                        <div class="col">
-                            <button type="button" class="btn btn-primary risk_lvl_btn">Primary</button>
-                            <button type="button" class="btn btn-primary risk_lvl_btn">Primary</button>
+                    <div class="risk col">
+                        <h1 id="user_risk_lvl">{{user_risk_lvl}}</h1>
+                        <div>
+                            <form action="" method="GET">
+                                <button type="submit" class="btn btn-primary risk_lvl_btn"> Cambiar </button>
+                            </form>   
                         </div>
                     </div>
                     <div class="risk_lvl_info">
-                        <p>Este valor es el nivel del riesgo que usted esta dispuesto a tomar como inversor,
-                            siendo {{min_risk_lvl}}/{{risk_max_lvl}} el menor riesgo posible y
-                            {{risk_max_lvl}}/{{risk_max_lvl}} el mayor riesgo disponible.
+                        <p>El perfil de riesgo indica la capacidad del inversor de asumir pérdidas.
+                           Existe una estrecha relación entre rentabilidad y riesgo.<br>
+                           Para tener la posibilidad de obtener una mayor rentabilidad 
+                           es necesario asumir un mayor riesgo.
+                           En investapp se establecen tres niveles: <br>BAJO, MODERADO y ALTO.
                         </p>
                         <p>
-                            Toda inversión tiene un riesgo asociado. Este riesgo se define como la probabilidad de
-                            que el
-                            rendimiento sea menor al esperado. <br>
+                            Toda inversión tiene un riesgo asociado.
+                            Este riesgo se define como la probabilidad de
+                            que el rendimiento sea menor al esperado. <br>
                             En general, las inversiones con mayor rendimiento esperado, tienen mayor riesgo
                             asociado.
                         </p>

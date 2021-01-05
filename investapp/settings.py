@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+from enum import Enum
 from pathlib import Path
 
 
@@ -128,10 +129,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+LOGIN_URL = "/profiles/login/"
 LOGOUT_REDIRECT_URL = '/index/'
 
 # RISKLEVEL CONSTANTS
-RISK_MAX_LVL = 6
+RISK_MAX_LVL = 3
 RISK_MIN_LVL = 1
 
+RISK_PROFILE = Enum('RISK_PROFILE', 'BAJO MODERADO ALTO')
 

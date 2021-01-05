@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Test de Perfil Financiero
+{% endblock %}
+
+{% block content %}
+<link href="{% static '/css/risk_profile_test.css' %}" rel="stylesheet">
+
+<div class=".container">
+    <div class="row justify-content-center">
+        <div id="form" class="col-md-4">
+            <form action="" method="POST" class="post-form">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

@@ -20,9 +20,10 @@ def register(request):
         if form.is_valid():
             new_user = form.save()
             new_user.refresh_from_db()
-            raw_password = form.cleaned_data.get('password')
+            raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=new_user.username, password=raw_password)
-            return redirect('user/{}'.format(user.id))
+            login(request, user)
+            return redirect('user_profile')
 
         return render(request, 'register.html', {'time_stamp': datetime.datetime.today(),
                                                  'form': form, 'user_already_logged': False})
@@ -58,16 +59,18 @@ def user_profile(request):
         user = request.user
         return render(request, 'user_profile.html', {'time_stamp': datetime.datetime.today(),
                                                      'user_already_logged': True,
-                                                     'user_name': user.username, 'user_risk_lvl': user.risk_level   ,
+                                                     'user_name': user.username,
+                                                     'user_risk_lvl': st.RISK_PROFILE(user.risk_level).name,
+                                                     'user_info': user,
                                                      'risk_max_lvl': st.RISK_MAX_LVL,
                                                      'min_risk_lvl': st.RISK_MIN_LVL,
-                                                     'index_growth': '../static/images/index_up.svg'})
+                                                     'index_growth': True, 'index_value': 0.54,
+                                                     'index_last_value': 8000, 'index_points_value': 0.94})
     else:
-        return redirect('register')
+        return redirect('user_login')
 
 
 def user_logout(request):
     logout(request)
     return redirect("index")
-
 

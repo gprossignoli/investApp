@@ -6,7 +6,7 @@ from profiles.business.models import UserProfile
 class RegisterForm(UserCreationForm):
     class Meta:
         model = UserProfile
-        fields = UserCreationForm.Meta.fields
+        fields = UserCreationForm.Meta.fields + ('email', )
 
 
 class AuthForm(AuthenticationForm):

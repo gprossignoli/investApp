@@ -8,6 +8,10 @@
  color: honeydew;
 }
 
+#market_title{
+    color: gold;
+}
+
 #risk_lvl_col{
     padding: 1em;
 }
@@ -24,9 +28,10 @@
     margin-right: 0.3em;
 }
 
-.risk #user_risk_lvl{
-    margin-bottom: 1em;
+#user_risk_lvl{
+    color: gold;
 }
+
 
 #favorite_market_summary{
     background-color: #212529;
