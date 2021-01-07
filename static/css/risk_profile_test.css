@@ -2,6 +2,7 @@
     list-style: none;
 }
 
+
 #form {
     width: 10em;
     margin-top: 1em;
@@ -9,11 +10,15 @@
     background-color: #343a40;
 }
 
-#form .btn{
+.post-form .btn{
     background-color: gray;
 }
 
-#form label{
+.post-form label{
     background-color: gray;
 }
 
+
+.post-form ul li label{
+    background-color: #343a40;
+}
