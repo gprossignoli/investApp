@@ -133,6 +133,22 @@ class RiskProfileTestForm(forms.Form):
         d = ChoiceItem(label="4.800€ de ganancias en el mejor caso, 2.400€ de pérdidas en el peor caso.",
                        value="4")
 
+    class Question15(DjangoChoices):
+        a = ChoiceItem(label="Sin dudas, fijar la tasa de interés",
+                       value="1")
+        b = ChoiceItem(label="Seguramente fijar la tasa de interés.",
+                       value="2")
+        c = ChoiceItem(label="Probablemente dejar que la tasa de interés siga variando.",
+                       value="2")
+        d = ChoiceItem(label="Seguro que dejar que la tasa de interés siga variando.",
+                       value="3")
+
+    class Question16(DjangoChoices):
+        a = ChoiceItem(label="Una ganacia segura de 500€.",
+                       value="1")
+        b = ChoiceItem(label="Una probabilidad del 50% de ganar 1.000€ y un 50% de no ganar nada.",
+                       value="3")
+
     q1 = forms.ChoiceField(choices=Question1.choices, widget=forms.RadioSelect,
                            label="¿Cómo cree que le describiría su mejor amigo en cuanto a la toma de riesgos?")
 
@@ -185,3 +201,13 @@ class RiskProfileTestForm(forms.Form):
 
     q14 = forms.ChoiceField(choices=Question14.choices, widget=forms.RadioSelect,
                             label="¿Cuál de las siguientes 4 inversiones prefiere?")
+
+    q15 = forms.ChoiceField(choices=Question15.choices, widget=forms.RadioSelect,
+                            label="Esta solicitando una hipoteca para una casa en la que planea seguir "
+                                  "viviendo bastante tiempo, los tipos de interés se han ido reduciendo "
+                                  "en los últimos meses, pero algunos economistas creen que esta tendencia va a remitir. "
+                                  "Tiene la opción de bloquear el tipo de interés o dejar que siga fluctuando. "
+                                  "¿Qué haría?")
+
+    q16 = forms.ChoiceField(choices=Question16.choices, widget=forms.RadioSelect,
+                            label="Le regalan 1.000€, elija una de las dos opciones.")
