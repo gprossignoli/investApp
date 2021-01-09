@@ -92,6 +92,47 @@ class RiskProfileTestForm(forms.Form):
         b = ChoiceItem(label="Es más importante estar protegido frente a la inflación.",
                        value="3")
 
+    class Question11(DjangoChoices):
+        a = ChoiceItem(label="Garantizar el empleo por 5 años.",
+                       value="1")
+        b = ChoiceItem(label="Un bonus de 25.000€.",
+                       value="2")
+        c = ChoiceItem(label="Acciones de la compañía por valor de 25.000€ "
+                             "con la intención de venderlas a mayor valor más tarde.",
+                       value="3")
+
+    class Question12(DjangoChoices):
+        a = ChoiceItem(label="Mantener los bonos.",
+                       value="1")
+        b = ChoiceItem(label="Vender los bonos, invertir la mitad de las ganancias en deuda a corto plazo (Money Market),"
+                             " y la otra mitad en bienes tangibles.",
+                       value="2")
+        c = ChoiceItem(label="Vender los bonos y utilizar todas las ganancias en bienes tangibles.",
+                       value="3")
+        d = ChoiceItem(label="Vender los bonos y utilizar todas las ganancias además de dinero adicional "
+                             "en bienes tangibles.",
+                       value="4")
+
+    class Question13(DjangoChoices):
+        a = ChoiceItem(label="Comprar una casa que le permita pagar las mensualidades de la hipoteca de forma cómoda.",
+                       value="1")
+        b = ChoiceItem(label="Comprar la casa que realmente le gusta, aunque tenga que apretarse el cinturón.",
+                       value="2")
+        c = ChoiceItem(label="Comprar la casa más cara que pueda permitirse.",
+                       value="3")
+        d = ChoiceItem(label="Pedir algo de dinero a amigos y familia para poder obtener una hipoteca mayor.",
+                       value="4")
+
+    class Question14(DjangoChoices):
+        a = ChoiceItem(label="200€ de ganancias en el mejor caso, ninguna pérdida en el peor caso.",
+                       value="1")
+        b = ChoiceItem(label="800€ de ganancias en el mejor caso, 200€ de pérdidas en el peor caso.",
+                       value="2")
+        c = ChoiceItem(label="2.600€ de ganancias en el mejor caso, 800€ de pérdidas en el peor caso.",
+                       value="3")
+        d = ChoiceItem(label="4.800€ de ganancias en el mejor caso, 2.400€ de pérdidas en el peor caso.",
+                       value="4")
+
     q1 = forms.ChoiceField(choices=Question1.choices, widget=forms.RadioSelect,
                            label="¿Cómo cree que le describiría su mejor amigo en cuanto a la toma de riesgos?")
 
@@ -127,3 +168,20 @@ class RiskProfileTestForm(forms.Form):
 
     q10 = forms.ChoiceField(choices=Question10.choices, widget=forms.RadioSelect,
                            label="¿Cuál de las dos afirmaciones es más importante para usted?")
+
+    q11 = forms.ChoiceField(choices=Question11.choices, widget=forms.RadioSelect,
+                            label="Consigue empleo en una 'start-up' de rápido crecimiento. "
+                                  "Tras el primer año se le ofrecen las siguientes opciones, ¿cuál escogería?")
+
+    q12 = forms.ChoiceField(choices=Question12.choices, widget=forms.RadioSelect,
+                            label="Algunos expertos predicen que el valor de los bonos podría caer mientras que el valor"
+                                  " de activos como el oro o los bienes inmobiliarios (bienes tangibles),"
+                                  " incrementarán su valor. Por otro lado, la mayoría de los expertos coinciden en que"
+                                  " los bonos estatales son bastante seguros. La mayoría de su cartera está formada por "
+                                  "bonos estatales. ¿Qué haría?")
+
+    q13 = forms.ChoiceField(choices=Question13.choices, widget=forms.RadioSelect,
+                            label="Está planeando comprar una casa en las próximas semanas, ¿qué estrategia seguiría?")
+
+    q14 = forms.ChoiceField(choices=Question14.choices, widget=forms.RadioSelect,
+                            label="¿Cuál de las siguientes 4 inversiones prefiere?")
