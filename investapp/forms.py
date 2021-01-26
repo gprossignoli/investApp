@@ -149,6 +149,40 @@ class RiskProfileTestForm(forms.Form):
         b = ChoiceItem(label="Una probabilidad del 50% de ganar 1.000€ y un 50% de no ganar nada.",
                        value="3")
 
+    class Question17(DjangoChoices):
+        a = ChoiceItem(label="Una pérdida segura de 500€.",
+                       value="1")
+        b = ChoiceItem(label="Una probabilidad del 50% de perder 1.000€ y un 50% de no perder nada.",
+                       value="3")
+
+    class Question18(DjangoChoices):
+        a = ChoiceItem(label="Una cuenta de ahorros o un fondo de inversión de deuda a corto plazo (Money Market).",
+                       value="1")
+        b = ChoiceItem(label="Un fondo de inversión de acciones y bonos.",
+                       value="2")
+        c = ChoiceItem(label="Una cartera de 15 acciones populares.",
+                       value="3")
+        d = ChoiceItem(label="Commodities como oro, plata o petróleo.",
+                       value="4")
+
+    class Question19(DjangoChoices):
+        a = ChoiceItem(label="60% en bajo riesgo, 30% de riesgo medio y 10% de riesgo elevado.",
+                       value="1")
+        b = ChoiceItem(label="30% en bajo riesgo, 40% de riesgo medio y 30% de riesgo elevado.",
+                       value="2")
+        c = ChoiceItem(label="10% en bajo riesgo, 40% de riesgo medio y 50% de riesgo elevado.",
+                       value="3")
+
+    class Question20(DjangoChoices):
+        a = ChoiceItem(label="Nada.",
+                       value="1")
+        b = ChoiceItem(label="El equivalente al salario de un mes.",
+                       value="2")
+        c = ChoiceItem(label="El equivalente al salario de tres meses.",
+                       value="3")
+        d = ChoiceItem(label="El equivalente a seis meses de salario.",
+                       value="4")
+
     q1 = forms.ChoiceField(choices=Question1.choices, widget=forms.RadioSelect,
                            label="¿Cómo cree que le describiría su mejor amigo en cuanto a la toma de riesgos?")
 
@@ -211,3 +245,21 @@ class RiskProfileTestForm(forms.Form):
 
     q16 = forms.ChoiceField(choices=Question16.choices, widget=forms.RadioSelect,
                             label="Le regalan 1.000€, elija una de las dos opciones.")
+
+    q17 = forms.ChoiceField(choices=Question17.choices, widget=forms.RadioSelect,
+                            label="Le regalan 2.000€, elija una de las dos opciones.")
+
+    q18 = forms.ChoiceField(choices=Question18.choices, widget=forms.RadioSelect,
+                            label="Un pariente le deja una herencia de 100.000€, suponga que decide invertir todo. "
+                                  "¿Qué opción elegiría?.")
+
+    q19 = forms.ChoiceField(choices=Question19.choices, widget=forms.RadioSelect,
+                            label="Si tiene que invertir 20.000€, ¿cómo distribuiría su cartera según el riesgo?")
+
+    q20 = forms.ChoiceField(choices=Question20.choices, widget=forms.RadioSelect,
+                            label="Un amigo de confianza, que es un experimentado geólogo, esta recaudando financiación"
+                                  " para llevar a cabo una expedición para encontrar un yacimiento de oro con el "
+                                  "propósito de explotarlo después. Si su amigo no logra encontrarlo, usted perderá "
+                                  "toda su inversión. "
+                                  "Su amigo estima que hay un 20% de probabilidad de éxito. "
+                                  "Si tuviese el dinero, ¿cuánto invertiría?")

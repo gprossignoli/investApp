@@ -23,7 +23,7 @@
     <div class="col-xl-12">
       <nav id="main_navbar" class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="{% url 'index' %}">
             <img id="logo" src="{% static 'images/investapp_logo.png' %}" width="70" height="70" alt="investapp_logo"
               class="d-inline-block align-middle mr-2">
           </a>
@@ -37,6 +37,7 @@
             <li><a href="{% url 'register' %}" class="login"><i class="fas fa-user-plus"></i> Registrarse</a></li>
             <li><a href="{% url 'user_login' %}" class="login"><i class="fas fa-user"></i> Conectarse </a></li>
             {% else %}
+            <li><a href="{% url 'user_profile' %}" class="login"><i class="fas fa-user"></i> Mi perfil </a></li>
             <li><a href="{% url 'user_logout' %}" class="login"><i class="fas fa-user"></i> Desconectarse </a></li>
             {% endif %}
           </ul>

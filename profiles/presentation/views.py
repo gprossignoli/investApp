@@ -33,7 +33,7 @@ def user_login(request):
     if request.method == "GET":
         form = AuthenticationForm()
         return render(request, 'login.html', {'time_stamp': datetime.datetime.today(),
-                                              'form': form, 'user_already_logged': False})
+                                              'form': form})
 
     elif request.method == "POST":
         form = AuthenticationForm(data=request.POST)
@@ -48,7 +48,7 @@ def user_login(request):
                 return redirect('user_profile')
 
         return render(request, 'login.html', {'time_stamp': datetime.datetime.today(),
-                                              'form': form, 'user_already_logged': False})
+                                              'form': form})
 
 
 def user_profile(request):

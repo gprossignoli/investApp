@@ -19,7 +19,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', views.index, name="index"),
+    path('', views.index, name="main"),
+    path('index', views.index, name="index"),
     path('risk_profile', views.risk_profile, name='risk_profile'),
     path('profiles/', include('profiles.presentation.urls'))
 ]

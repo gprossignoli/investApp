@@ -72,6 +72,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'context_proccessors.base_context',
+)
+
 WSGI_APPLICATION = 'investapp.wsgi.application'
 
 
@@ -138,3 +142,12 @@ RISK_MIN_LVL = 1
 
 RISK_PROFILE = Enum('RISK_PROFILE', 'BAJO MODERADO ALTO')
 
+# The score range from the risk profile test
+MAX_TEST_SCORE = 69
+MIN_TEST_SCORE = 20
+
+# Precalc of the classification of the user's test score in one of the groups
+GROUP_SEGMENT_LENGTH = (MAX_TEST_SCORE - MIN_TEST_SCORE) / len(RISK_PROFILE)
+GROUPS_LEFT_LIMITS = Enum('RISK_PROFILE', {'BAJO': MIN_TEST_SCORE,
+                                           'MODERADO': (MIN_TEST_SCORE + GROUP_SEGMENT_LENGTH) + 1,
+                                           'ALTO': (MIN_TEST_SCORE + 2*GROUP_SEGMENT_LENGTH) + 1})

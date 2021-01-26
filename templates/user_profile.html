@@ -60,7 +60,7 @@ perfil de {{ user_name }}
                     <div class="risk col">
                         <h1 id="user_risk_lvl">{{user_risk_lvl}}</h1>
                         <div>
-                            <form action="" method="GET">
+                            <form action="{% url 'risk_profile' %}" method="GET">
                                 <button type="submit" class="btn btn-primary risk_lvl_btn"> Cambiar </button>
                             </form>   
                         </div>
