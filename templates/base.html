@@ -27,7 +27,7 @@
             <img id="logo" src="{% static 'images/investapp_logo.png' %}" width="70" height="70" alt="investapp_logo"
               class="d-inline-block align-middle mr-2">
           </a>
-          <div class="d-flex justify-content-center">
+          <div id="div_fecha" class="d-flex justify-content-center">
             <div class="p-2" width="70" height="70">
               <h3 id="fecha">{{ time_stamp }}</h3>
             </div>
@@ -67,6 +67,7 @@
 
   <!-- Page Content -->
   {% block content %}
+  <p></p>
   {%endblock%}
 
   <!-- Bootstrap core JavaScript -->

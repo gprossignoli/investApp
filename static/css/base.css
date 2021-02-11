@@ -1,15 +1,23 @@
-* {
-    border: solid black 1px;
-}
-
 body {
     background: rgb(255,203,0);
     background: linear-gradient(180deg, rgba(255,203,0,1) 1%, rgba(121,119,9,1) 49%, rgba(0,0,0,1) 100%); 
 }
 
+.navbar {
+    border: black solid 1px;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
 #logo{
     border-radius: 30%;
     margin-left: 1em;
+}
+
+#div_fecha{
+    
+    border: black solid 1px;
+    background-color: gray;
 }
 
 #fecha {

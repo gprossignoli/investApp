@@ -67,14 +67,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'investapp.context_processors.base_context',
             ],
         },
     },
 ]
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'context_proccessors.base_context',
-)
 
 WSGI_APPLICATION = 'investapp.wsgi.application'
 

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Confirmar borrado del perfil
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'profiles/css/user_profile_delete.css' %}" rel="stylesheet">
+
+<div id="main" class="row justify-content-center">
+    <div id="content" class="col text-center">
+        <p>¿Confirma que desea borrar su perfil de investApp?<br> Perderá el acceso a éste si continua </p>
+        <div id="form" class="col text-center">
+            <form action="" method="POST" class="post-form">{% csrf_token %}
+                <button id="form_btn" type="submit" class="save btn btn-default">Borrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Resultado del Test de Perfil Financiero
+{% endblock %}
+
+{% block content %}
+<link href="{% static '/css/risk_profile_score.css' %}" rel="stylesheet">
+
+<div class="col" id="risk_lvl_col">
+    <div class="risk_lvl">
+        <div class="risk col">
+            <h1 id="user_risk_lvl">{{user_risk_lvl}}</h1>
+            <div>
+                <form action="{% url 'user_login' %}" method="GET">
+                    <button type="submit" class="btn btn-primary risk_lvl_btn"> Guardar en tu perfil </button>
+                </form>
+            </div>
+        </div>
+        <div class="risk_lvl_info">
+            <p>El perfil de riesgo indica la capacidad del inversor de asumir pérdidas.
+                Existe una estrecha relación entre rentabilidad y riesgo.<br>
+                Para tener la posibilidad de obtener una mayor rentabilidad
+                es necesario asumir un mayor riesgo.
+                En investapp se establecen tres niveles: <br>BAJO, MODERADO y ALTO.
+            </p>
+            <p>
+                Toda inversión tiene un riesgo asociado.
+                Este riesgo se define como la probabilidad de
+                que el rendimiento sea menor al esperado. <br>
+                En general, las inversiones con mayor rendimiento esperado, tienen mayor riesgo
+                asociado.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
