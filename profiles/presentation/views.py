@@ -2,13 +2,14 @@ import datetime
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, UpdateView
 
 from profiles.business.models import UserProfile
 from profiles.presentation.forms import RegisterForm
-from profiles.business.user_profile_service import UserProfileService
 from investapp import settings as st
 
 
@@ -75,8 +76,27 @@ def user_logout(request):
     return redirect("index")
 
 
-class DeleteUserProfile(DeleteView):
+class UserProfilePermissionsMixin(AccessMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not self.user_has_permissions(request, kwargs['pk']):
+            return self.handle_no_permission()
+
+        return super(UserProfilePermissionsMixin, self).dispatch(request, *args, **kwargs)
+
+    @staticmethod
+    def user_has_permissions(request, requested_pk):
+        return request.user.is_superuser or (request.user.pk == requested_pk)
+
+
+class DeleteUserProfile(LoginRequiredMixin, UserProfilePermissionsMixin, DeleteView):
     model = UserProfile
     template_name = "user_profile_delete.html"
 
     success_url = "/"
+
+
+class UpdateUserProfile(LoginRequiredMixin, UserProfilePermissionsMixin, UpdateView):
+    model = UserProfile
+    template_name = "user_profile_update.html"
+
+    success_url = ""
