@@ -98,5 +98,12 @@ class DeleteUserProfile(LoginRequiredMixin, UserProfilePermissionsMixin, DeleteV
 class UpdateUserProfile(LoginRequiredMixin, UserProfilePermissionsMixin, UpdateView):
     model = UserProfile
     template_name = "user_profile_update.html"
+    fields = ['username', 'email']
+    success_url = "/profiles/user"
 
-    success_url = ""
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == "POST":
+            if UserProfile.objects.filter(username=request.POST['username']).exists() and \
+                    (UserProfile.objects.get_by_natural_key(username=request.POST['username']).pk is not kwargs['pk']):
+                return self.handle_no_permission()
+        return super(UpdateUserProfile, self).dispatch(request, *args, **kwargs)

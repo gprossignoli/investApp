@@ -1,0 +1,24 @@
+#main{
+    background-color: #343a40;    
+    margin: 1em;
+}
+
+#content{
+    padding-left: 10em;
+    padding-right: 10em;
+    
+}
+
+#content form{
+    width:50%; 
+    margin:0 auto;
+}
+
+#content p{
+    margin-top: 0.5em;
+    background-color: gray;
+}
+
+#content p span{
+    margin-left: 3em;
+}

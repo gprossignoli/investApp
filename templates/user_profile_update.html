@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Confirmar borrado del perfil
+{% endblock %}
+
+{% block content %}
+<link href="{% static 'profiles/css/user_profile_update.css' %}" rel="stylesheet">
+
+<div id="main" class="row justify-content-center">
+    <div id="content" class="col text-center">
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+    </div>
+</div>
+    
+{% endblock %}

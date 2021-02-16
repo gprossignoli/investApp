@@ -16,7 +16,7 @@ perfil de {{ user_name }}
             <li class="list-group-item profile_info">
                 <div class="row">
                     <div>
-                        <form action="{% url 'user_profile' %}" method="PUT">
+                        <form action="{% url 'update_user_profile' pk=user.pk %}" method="GET">
                             <button id="profile_info_modify_btn" type="submit" class="btn btn-primary risk_lvl_btn">
                                 Modificar información </button>
                         </form>   
