@@ -3,6 +3,7 @@
     margin-top: 1em;
     margin-bottom: 1em;
     background-color: #343a40;
+    border-radius: 2%;
 }
 
 #form .btn{
@@ -11,4 +12,23 @@
 
 #form label{
     background-color: gray;
+}
+
+#form input {
+    width: 80%;
+}
+
+.post-form {
+margin-top: 0.9em;
+margin-bottom: 0px;
+}
+
+#btn {
+    display: flex;
+    justify-content: center;
+}
+#register_link{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.9em;
 }

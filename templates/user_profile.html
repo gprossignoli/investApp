@@ -10,26 +10,61 @@ perfil de {{ user_name }}
 
 <div class="row">
     <div class="col">
-        <ul class="list-group" id="profile">
-            <li class="list-group-item profile_info">Nombre de usuario: {{user.username }}</li>
-            <li class="list-group-item profile_info">email: {{user.email }}</li>
-            <li class="list-group-item profile_info">
-                <div class="row">
-                    <div>
-                        <form action="{% url 'update_user_profile' pk=user.pk %}" method="GET">
-                            <button id="profile_info_modify_btn" type="submit" class="btn btn-primary risk_lvl_btn">
-                                Modificar información </button>
-                        </form>   
+        <div class="row">
+            <ul class="list-group" id="profile">
+                <li class="list-group-item profile_info">Nombre de usuario: {{user.username }}</li>
+                <li class="list-group-item profile_info">email: {{user.email }}</li>
+                <li class="list-group-item profile_info">
+                    <div class="row">
+                        <div>
+                            <form action="{% url 'update_user_profile' pk=user.pk %}" method="GET">
+                                <button id="profile_info_modify_btn" type="submit" class="btn btn-primary risk_lvl_btn">
+                                    Modificar información </button>
+                            </form>
+                        </div>
+                        <div>
+                            <form action="{% url 'delete_user_profile' pk=user.pk %}" method="GET">
+                                <button id="profile_info_remove_btn" type="submit" class="btn btn-primary risk_lvl_btn">
+                                    Eliminar el perfil </button>
+                            </form>
+                        </div>
                     </div>
-                    <div>
-                        <form action="{% url 'delete_user_profile' pk=user.pk %}" method="GET">
-                            <button id="profile_info_remove_btn" type="submit" class="btn btn-primary risk_lvl_btn">
-                                Eliminar el perfil </button>
-                        </form>   
-                    </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+            <div id="portfolio_summary">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Accion</th>
+                            <th scope="col">ISIN</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Variacion</th>
+                            <th scope="col">>Volatilidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Acciona</th>
+                            <td>ANA</td>
+                            <td>137.2</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="col">
         <div class="row">
@@ -47,23 +82,23 @@ perfil de {{ user_name }}
                     <div class="col market_index_data">
                         <span class="price_row">Variación</span>
                         {% if index_growth %}
-                            <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
-                                    src="{% static 'images/index_up.svg' %}">
-                                <span class="market_index_value">+{{index_value}}%</span>
-                            </div>
+                        <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
+                                src="{% static 'images/index_up.svg' %}">
+                            <span class="market_index_value">+{{index_value}}%</span>
+                        </div>
                         {% else %}
-                            <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
-                                    src="{% static 'images/index_down.svg' %}">
-                                <span class="market_index_value">{{index_value}}%</span>
-                            </div>
+                        <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
+                                src="{% static 'images/index_down.svg' %}">
+                            <span class="market_index_value">{{index_value}}%</span>
+                        </div>
                         {% endif %}
                     </div>
                     <div class="col market_index_data">
                         <span class="price_row">Puntos</span>
                         {% if index_growth %}
-                            <span class="index_points_value">+{{index_points_value}}</span>
+                        <span class="index_points_value">+{{index_points_value}}</span>
                         {% else %}
-                            <span class="index_points_value">{{index_points_value}}</span>
+                        <span class="index_points_value">{{index_points_value}}</span>
                         {% endif %}
                         <span>pts</span>
                     </div>
@@ -78,15 +113,15 @@ perfil de {{ user_name }}
                         <div>
                             <form action="{% url 'risk_profile' %}" method="GET">
                                 <button type="submit" class="btn btn-primary risk_lvl_btn"> Cambiar </button>
-                            </form>   
+                            </form>
                         </div>
                     </div>
                     <div class="risk_lvl_info">
                         <p>El perfil de riesgo indica la capacidad del inversor de asumir pérdidas.
-                           Existe una estrecha relación entre rentabilidad y riesgo.<br>
-                           Para tener la posibilidad de obtener una mayor rentabilidad 
-                           es necesario asumir un mayor riesgo.
-                           En investapp se establecen tres niveles: <br>BAJO, MODERADO y ALTO.
+                            Existe una estrecha relación entre rentabilidad y riesgo.<br>
+                            Para tener la posibilidad de obtener una mayor rentabilidad
+                            es necesario asumir un mayor riesgo.
+                            En investapp se establecen tres niveles: <br>BAJO, MODERADO y ALTO.
                         </p>
                         <p>
                             Toda inversión tiene un riesgo asociado.

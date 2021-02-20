@@ -1,7 +1,8 @@
 #profile {
-    margin-left: 1em;
+    margin-left: 2em;
     margin-top: 1em;
     margin-bottom: 1em;
+    width: 100%;
 }
 
 #profile_info_remove_btn{
@@ -60,4 +61,9 @@
 
 #risk_lvl_buttons{
     display: block; 
+}
+
+#portfolio_summary{
+    background-color: #212529;
+    margin-left: 1em;
 }
