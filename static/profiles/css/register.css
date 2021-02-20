@@ -1,7 +1,6 @@
-
 #form {
     border: 1px solid black;
-    border-radius: 6%;
+    border-radius: 2%;
     width: 10em;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -12,10 +11,26 @@
     color: gold;
 }
 
+#btn{
+    display: flex;
+    justify-content: center;
+    
+}
+
 #form .btn{
     background-color: gray;
+
 }
 
 #form label{
     background-color: gray;
+}
+
+#form input{
+    width: 85%;
+}
+
+#form span::before{
+content: "\A";
+white-space: pre;
 }
