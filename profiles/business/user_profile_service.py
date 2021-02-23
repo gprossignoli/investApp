@@ -27,9 +27,6 @@ class UserProfileService:
             risk_level = st.RISK_PROFILE.MODERADO
         else:
             risk_level = st.RISK_PROFILE.ALTO
-        if username:
-            user = UserProfile.objects.get_by_natural_key(username=username)
-            user.update_risk_level(risk_level.value)
 
         return risk_level.name, total_score
 

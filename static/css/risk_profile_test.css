@@ -10,6 +10,15 @@
     background-color: #343a40;
 }
 
+.post-form{
+    padding: 1em;
+}
+
+#btn{
+    display: flex;
+    justify-content: center;
+}
+
 .post-form .btn{
     background-color: gray;
 }

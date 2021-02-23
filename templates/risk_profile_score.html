@@ -13,7 +13,9 @@ Resultado del Test de Perfil Financiero
         <div class="risk col">
             <h1 id="user_risk_lvl">{{user_risk_lvl}}</h1>
             <div>
-                <form action="{% url 'user_login' %}" method="GET">
+                <form action="{% url 'risk_profile_score' %}" method="POST">{% csrf_token %}
+                    <input type ="hidden" name ="risk_lvl" value ={{user_risk_lvl}} />
+                    <input type ="hidden" name ="risk_score" value ={{user_risk_score}} />
                     <button type="submit" class="btn btn-primary risk_lvl_btn"> Guardar en tu perfil </button>
                 </form>
             </div>

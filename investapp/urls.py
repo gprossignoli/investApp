@@ -22,5 +22,6 @@ urlpatterns = [
     path('', views.index, name="main"),
     path('index', views.index, name="index"),
     path('risk_profile', views.risk_profile, name='risk_profile'),
+    path('risk_profile_score', views.RiskProfileScore.as_view(), name="risk_profile_score"),
     path('profiles/', include('profiles.presentation.urls'))
 ]
