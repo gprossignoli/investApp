@@ -46,7 +46,12 @@ def user_login(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('user_profile')
+                next_view = request.session.get('view_after_login', 'user_profile')
+                try:
+                    del request.session['view_after_login']
+                except KeyError:
+                    pass
+                return redirect(next_view)
 
         return render(request, 'login.html', {'form': form})
 

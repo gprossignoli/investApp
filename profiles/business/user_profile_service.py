@@ -28,5 +28,5 @@ class UserProfileService:
         else:
             risk_level = st.RISK_PROFILE.ALTO
 
-        return risk_level.name, total_score
+        return {'name': risk_level.name, 'value': risk_level.value}, total_score
 

@@ -1,6 +1,3 @@
-import datetime
-
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 
@@ -22,33 +19,23 @@ def risk_profile(request):
     elif request.method == "POST":
         form = RiskProfileTestForm(data=request.POST)
         if form.is_valid():
-
-            if request.user.is_authenticated:
-                UserProfileService().calculate_risk_level(scores=tuple([int(e) for e in form.cleaned_data.values()]),
-                                                          username=request.user.username)
-                return redirect("user_profile")
-
-            else:
-                risk_profile_calculated = UserProfileService() \
-                    .calculate_risk_level(scores=tuple([int(e) for e in form.cleaned_data.values()]))
-                request.session['risk_profile_calculated'] = risk_profile_calculated
-                return redirect("risk_profile_score")
+            risk_profile_calculated = UserProfileService() \
+                .calculate_risk_level(scores=tuple([int(e) for e in form.cleaned_data.values()]))
+            request.session['risk_profile_calculated'] = risk_profile_calculated
+            return redirect("risk_profile_score")
 
 
 class RiskProfileScore(View):
     def get(self, request):
-        try:
-            risk_profile_calculated = request.session['risk_profile_calculated']
-            del request.session['risk_profile_calculated']
-        except Exception as e:
-            raise e
-
-        return render(request, 'risk_profile_score.html', {'user_risk_lvl': risk_profile_calculated[0],
+        risk_profile_calculated = request.session['risk_profile_calculated']
+        return render(request, 'risk_profile_score.html', {'user_risk_lvl': risk_profile_calculated[0]['name'],
                                                            'user_risk_score': risk_profile_calculated[1]})
 
-    @login_required(login_url="profiles/login/")
     def post(self, request):
-        user = UserProfile.objects.get_by_natural_key(username=request.user.username)
-        user.update_risk_level(request.POST['risk_score'])
-        redirect("user_profile")
+        if not request.user.is_authenticated:
+            request.session['view_after_login'] = 'risk_profile_score'
+            return redirect("user_login")
 
+        user = UserProfile.objects.get_by_natural_key(username=request.user.username)
+        user.update_risk_level(request.session['risk_profile_calculated'][0]['value'])
+        return redirect("user_profile")
