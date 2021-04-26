@@ -18,22 +18,28 @@
 
 #title{
     margin-left: 2em;
+    color: yellow;
 }
 
 #data ul{
+    columns: 2;
+    column-gap: 1em;
+    height: 100%;
     list-style: none;
+    margin: 1em;
+    padding: 1em;
+    background-color: gray;
 }
 
-
-.index_data{
-    margin-top: 2em;
+#data li{
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 1em;
     display: flex;
     flex-direction: column;
     border: black solid 1px;
     border-radius: 15%;
-    background-color: gray;
+    background-color: #212529;
     color: honeydew;
 }
 
@@ -47,4 +53,19 @@
 	color: yellow;
 	text-decoration: none;
     background-color: transparent;
+}
+
+.id_info p {
+	margin: 0;
+}
+
+.pagination{
+    padding: 0.5em;
+    align-items: center;
+}
+.pagination li{
+    margin: 0 0.5em;
+    background-color: gray;
+    border-radius: 10%;
+    font-size: larger;
 }

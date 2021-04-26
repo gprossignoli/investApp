@@ -1,5 +1,4 @@
 from investapp import settings as st
-from markets.business.models import Stock
 from markets.infrastructure.data_access import DataReaderAbsFact
 from utils.exceptions import ExternalResourceError, InternalServerError
 
@@ -8,18 +7,19 @@ class MarketsService:
     def __init__(self):
         self.symbols_dao = DataReaderAbsFact.get_instance().create_dao()
 
-    def list_stocks(self):
+    def list_stocks(self, exchange: str = None):
         try:
             symbols = self.symbols_dao.get_all_stocks()
         except ExternalResourceError:
             raise InternalServerError(error="Error: external resource")
         stocks = []
         for symbol in symbols:
-            stocks.append({
-                'ticker': symbol['ticker'],
-                'name': symbol['name'],
-                'isin': symbol['isin']
-            })
+            if symbol['exchange'] == exchange:
+                stocks.append({
+                    'ticker': symbol['ticker'],
+                    'name': symbol['name'],
+                    'isin': symbol['isin']
+                })
         return tuple(stocks)
 
     def list_indexes(self):
@@ -36,7 +36,7 @@ class MarketsService:
         return tuple(indexes)
 
     @staticmethod
-    def calculate_risk_level(scores, username=None):
+    def calculate_risk_level(scores):
         """
         Calculates and updates the user profile (if the user is already authenticated)
         with the risk profile of the user from the answers of the test,
@@ -46,8 +46,6 @@ class MarketsService:
 
         :param scores: The scores of each question based on the answers of the user to the risk profile test.
         :type scores: tuple[int]
-        :param username: Username of the user that has made the test if it was authenticated, otherwise is None.
-        :type username: str
 
         :returns: The risk level calculated, with name and score.
         :rtype: tuple[str, float]
@@ -61,4 +59,3 @@ class MarketsService:
             risk_level = st.RISK_PROFILE.ALTO
 
         return {'name': risk_level.name, 'value': risk_level.value}, total_score
-

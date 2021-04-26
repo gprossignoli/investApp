@@ -6,34 +6,53 @@ Lista de Mercados
 {% endblock %}
 
 {% block content %}
-    <link href="{% static '/css/markets_exchanges_list.css' %}" rel="stylesheet">
-    <div class="row" id="markets_list">
-        <div class="col-xl-12" id="indexes_col">
-            <div id="list_content">
-                <div id="title">
-                    <h1>Mercados</h1>
-                </div>
-                <div id="data">
-                    {% if indexes %}
-                    <ul>
-                      {% for index in indexes %}
-                        <div class="index_data">
-                            <li>
-                                <div class="id_info">
-                                    <a href="{% url 'stocks' %}">{{ index.ticker }}</a> 
-                                    <p>{{index.name}}</p>
-                                </div>
-                            </li>
-                        </div>
-                      {% endfor %}
-                    </ul>
-                    {% else %}
-                      <p>There are no exchanges available at this time.</p>
-                    {% endif %}
-                </div>
+<link href="{% static '/css/markets_exchanges_list.css' %}" rel="stylesheet">
+<div class="row" id="markets_list">
+    <div class="col-xl-12" id="indexes_col">
+        <div id="list_content">
+            <div id="title">
+                <h1>Mercados</h1>
             </div>
+            <div id="data">
+                {% if indexes %}
+                <ul>
+                    {% for index in indexes %}
+                    <li>
+                        <div class="id_info">
+                            <a href="{% url 'stocks' %}?exchange={{ index.ticker }}">{{ index.ticker }}</a>
+                            <p>{{ index.name }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No hay ningun mercado disponible en este momento.</p>
+                {% endif %}
+            </div>
+            {% if indexes.has_other_pages %}
+            <ul class="pagination">
+                {% if indexes.has_previous %}
+                <li><a href="?page={{ indexes.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in indexes.paginator.page_range %}
+                {% if indexes.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if indexes.has_next %}
+                <li><a href="?page={{ indexes.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+            {% endif %}
         </div>
+
     </div>
+</div>
 
 {% endblock %}
-
