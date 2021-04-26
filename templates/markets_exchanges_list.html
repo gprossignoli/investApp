@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Lista de Mercados
+{% endblock %}
+
+{% block content %}
+    <link href="{% static '/css/markets_exchanges_list.css' %}" rel="stylesheet">
+    <div class="row" id="markets_list">
+        <div class="col-xl-12" id="indexes_col">
+            <div id="list_content">
+                <div id="title">
+                    <h1>Mercados</h1>
+                </div>
+                <div id="data">
+                    {% if indexes %}
+                    <ul>
+                      {% for index in indexes %}
+                        <div class="index_data">
+                            <li>
+                                <div class="id_info">
+                                    <a href="{% url 'stocks' %}">{{ index.ticker }}</a> 
+                                    <p>{{index.name}}</p>
+                                </div>
+                            </li>
+                        </div>
+                      {% endfor %}
+                    </ul>
+                    {% else %}
+                      <p>There are no exchanges available at this time.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

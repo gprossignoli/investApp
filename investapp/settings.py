@@ -9,14 +9,41 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import logging
 import os
 from enum import Enum
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# LOGGING CONFIG
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('findata')
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+
+# to log debug messages
+debug_logger = logging.StreamHandler()
+debug_logger.setLevel(logging.DEBUG)
+debug_logger.setFormatter(formatter)
+
+# to log general messages
+# x2 files of 2mb
+info_logger = RotatingFileHandler(filename='investapp.log', maxBytes=2097152, backupCount=2)
+info_logger.setLevel(logging.INFO)
+info_logger.setFormatter(formatter)
+
+#to log errors messages
+error_logger = RotatingFileHandler(filename='investapp_errors.log', maxBytes=2097152, backupCount=2)
+error_logger.setLevel(logging.ERROR)
+error_logger.setFormatter(formatter)
+
+logger.addHandler(debug_logger)
+logger.addHandler(info_logger)
+logger.addHandler(error_logger)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -27,13 +54,14 @@ SECRET_KEY = 't3=iwr8^i&_dl=68r(7mn#)4j%sq1baao6418amt1=k+hh_0m1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'profiles.apps.ProfilesConfig',
+    'markets.apps.MarketsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -148,3 +176,10 @@ GROUP_SEGMENT_LENGTH = (MAX_TEST_SCORE - MIN_TEST_SCORE) / len(RISK_PROFILE)
 GROUPS_LEFT_LIMITS = Enum('RISK_PROFILE', {'BAJO': MIN_TEST_SCORE,
                                            'MODERADO': (MIN_TEST_SCORE + GROUP_SEGMENT_LENGTH) + 1,
                                            'ALTO': (MIN_TEST_SCORE + 2*GROUP_SEGMENT_LENGTH) + 1})
+
+# Fincalcs connection data
+
+FINCALCS_HOST = 'http://localhost:8001'
+FINCALCS_SYMBOLS_ENDPOINT = '/symbols'
+FINCALCS_PORTFOLIO_ENDPOINT = '/portfolio'
+
