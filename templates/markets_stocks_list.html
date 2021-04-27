@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Lista de Acciones
+{% endblock %}
+
+{% block content %}
+<link href="{% static '/css/markets_stocks_list.css' %}" rel="stylesheet">
+<div class="row" id="markets_list">
+    <div class="col-xl-12" id="stocks_col">
+        <div id="list_content">
+            <div id="title">
+                <h1>Acciones de {{ exchange }}</h1>
+            </div>
+            <div id="data">
+                {% if stocks %}
+                <ul>
+                    {% for stock in stocks %}
+                    <li>
+                        <div class="id_info">
+                            <a href="{% url 'stocks' %}">{{ stock.ticker }}</a>
+                            <p>{{ stock.isin }} </p>
+                            <p>{{ stock.name }} </p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No hay ninguna accion disponible en este momento.</p>
+                {% endif %}
+            </div>
+            {% if stocks.has_other_pages %}
+            <ul class="pagination">
+                {% if stocks.has_previous %}
+                <li><a href="?page={{ stocks.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in stocks.paginator.page_range %}
+                {% if stocks.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if stocks.has_next %}
+                <li><a href="?page={{ stocks.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -34,11 +34,11 @@ def list_indexes(request):
             return render(request, "markets_exchanges_list.html", context=context)
 
 
-"""class StocksListView(generic.ListView):
-    model = Stock
-    paginate_by = 1
+def list_stocks(request):
+    if request.method != 'GET':
+        return HttpResponse(status=405)
 
-    def get(self, request, *args, **kwargs):
+    if request.method == 'GET':
         exchange = request.GET.get('exchange')
         try:
             stocks = MarketsService().list_stocks(exchange=exchange)
@@ -46,9 +46,17 @@ def list_indexes(request):
             return HttpResponseServerError()
         else:
             context_data = [{
-                'name': stock['name'], 'isin': stock['isin'], 'ticker': stock['ticker']} for stock in stocks]
+                'name': stocks['name'], 'isin': stocks['isin'], 'ticker': stocks['ticker']
+            } for stocks in stocks]
+            paginator = Paginator(context_data, 6)
 
-            context = {'stocks': context_data}
+            n_page = request.GET.get('page', 1)
+            try:
+                stocks = paginator.page(n_page)
+            except PageNotAnInteger:
+                stocks = paginator.page(1)
+            except EmptyPage:
+                stocks = paginator.page(paginator.num_pages)
 
+            context = {'stocks': stocks, 'has_next': stocks.has_next(), 'has_prev': stocks.has_previous()}
             return render(request, "markets_stocks_list.html", context=context)
-"""
