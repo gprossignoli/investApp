@@ -1,4 +1,5 @@
-from investapp import settings as st
+import numpy as np
+
 from markets.infrastructure.data_access import DataReaderAbsFact
 from utils.exceptions import ExternalResourceError, InternalServerError
 
@@ -35,27 +36,32 @@ class MarketsService:
             })
         return tuple(indexes)
 
+    def get_stock(self, ticker):
+        try:
+            stock_data = self.symbols_dao.get_symbol(ticker)
+            stock_data['daily_returns'] = self.__clean_returns(stock_data['daily_returns'])
+
+        except ExternalResourceError:
+            raise InternalServerError(error="Error: external resource")
+
+        return stock_data
+
     @staticmethod
-    def calculate_risk_level(scores):
+    def __clean_returns(returns):
         """
-        Calculates and updates the user profile (if the user is already authenticated)
-        with the risk profile of the user from the answers of the test,
-        associating the total score to one of the three risk levels established.
-
-        NOTE: As the risk levels are fixed as business rule, the can be precalculated at the service start.
-
-        :param scores: The scores of each question based on the answers of the user to the risk profile test.
-        :type scores: tuple[int]
-
-        :returns: The risk level calculated, with name and score.
-        :rtype: tuple[str, float]
+        Cleans extreme outliers to maintain a good visualization.
         """
-        total_score = sum(scores)
-        if total_score < st.GROUPS_LEFT_LIMITS.MODERADO.value:
-            risk_level = st.RISK_PROFILE.BAJO
-        elif total_score < st.GROUPS_LEFT_LIMITS.ALTO.value:
-            risk_level = st.RISK_PROFILE.MODERADO
-        else:
-            risk_level = st.RISK_PROFILE.ALTO
+        rets = {k: round(float(v), 4) if v != "null" else 0.0 for k,v in returns.items()}
+        std = np.array(list(rets.values())).std()
+        avg = sum(list(rets.values())) / len(rets.values())
+        for k, ret in rets.items():
+            if abs(avg - ret) >= 2 * std:
+                if ret < 0:
+                    v = avg - (2 * std)
+                else:
+                    v = avg + (2 * std)
+            else:
+                v = rets[k]
+            rets[k] = str(v)
 
-        return {'name': risk_level.name, 'value': risk_level.value}, total_score
+        return rets

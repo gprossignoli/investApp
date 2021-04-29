@@ -36,7 +36,7 @@ info_logger = RotatingFileHandler(filename='investapp.log', maxBytes=2097152, ba
 info_logger.setLevel(logging.INFO)
 info_logger.setFormatter(formatter)
 
-#to log errors messages
+# to log errors messages
 error_logger = RotatingFileHandler(filename='investapp_errors.log', maxBytes=2097152, backupCount=2)
 error_logger.setLevel(logging.ERROR)
 error_logger.setFormatter(formatter)
@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chartjs',
 ]
 
 MIDDLEWARE = [
@@ -182,4 +183,3 @@ GROUPS_LEFT_LIMITS = Enum('RISK_PROFILE', {'BAJO': MIN_TEST_SCORE,
 FINCALCS_HOST = 'http://localhost:8001'
 FINCALCS_SYMBOLS_ENDPOINT = '/symbols'
 FINCALCS_PORTFOLIO_ENDPOINT = '/portfolio'
-

@@ -1,5 +1,6 @@
 asgiref==3.3.1
 Django==3.1.4
+django-chartjs==2.2.1
 django-choices==1.7.1
 export==0.1.2
 mysqlclient==2.0.2

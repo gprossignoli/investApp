@@ -1,0 +1,21 @@
+#stock_col {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: #343a40;
+}
+
+#stock_title{
+    color: yellow;
+}
+
+.stock_data{
+    background-color: gray;
+    color: honeydew;
+}
+
+#stock_info{
+    display: flex;
+    flex-direction: row;
+}

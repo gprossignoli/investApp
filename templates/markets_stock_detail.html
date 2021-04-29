@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Lista de Acciones
+{% endblock %}
+
+{% block content %}
+<link href="{% static '/css/markets_stock_detail.css' %}" rel="stylesheet">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+    $.get('{% url "stock_closures" %}?ticker={{ticker}}', function (data) {
+        var ctx = $("#closuresChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line', data: data,
+            
+        });
+    });
+
+    $.get('{% url "stock_returns" %}?ticker={{ticker}}', function (data) {
+        var ctx = $("#returnsChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line', data: data,
+        });
+    });
+
+</script>
+
+<div class="row" id="markets_list">
+    <div class="col-xl-12" id="stock_col">
+        <div class="row">
+            <div class="col">
+                <h2 id="stock_title">{{stock.name}}</h2>
+                <div id="stock_info">
+                    <ul class="stock_data">
+                        <li>ticker: {{stock.ticker}}</li>
+                        <li>isin: {{stock.isin}}</li>
+                        <li>Mercado: {{stock.exchange}}</li>
+                    </ul>
+                    <ul class="stock_data">
+                        <li>Primera fecha: {{stock.first_date}}</li>
+                        <li>Ultima fecha: {{stock.last_date}}</li>
+                    </ul>
+                    <ul class="stock_data">
+                        <li>CAGR 3 años: {{stock.cagr.3yr}}</li>
+                        <li>CAGR 5 años: {{stock.cagr.5yr}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="charts">
+            <div class="col">
+                <canvas id="closuresChart" width="500" height="400"></canvas>
+                <canvas id="returnsChart" width="500" height="400"></canvas>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

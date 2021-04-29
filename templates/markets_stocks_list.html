@@ -19,7 +19,7 @@ Lista de Acciones
                     {% for stock in stocks %}
                     <li>
                         <div class="id_info">
-                            <a href="{% url 'stocks' %}">{{ stock.ticker }}</a>
+                            <a href="{% url 'stock' ticker=stock.ticker%}">{{ stock.ticker }}</a>
                             <p>{{ stock.isin }} </p>
                             <p>{{ stock.name }} </p>
                         </div>
@@ -52,7 +52,6 @@ Lista de Acciones
             </ul>
             {% endif %}
         </div>
-
     </div>
 </div>
 

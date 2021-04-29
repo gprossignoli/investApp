@@ -61,11 +61,12 @@ class FincalcsDao(AbstractDao):
             return indexes
 
     def get_symbol(self, ticker: str):
-        url = self.base_url.join([st.FINCALCS_SYMBOLS_ENDPOINT, '/{}'.format(ticker)])
+        url = self.base_url + st.FINCALCS_SYMBOLS_ENDPOINT + '/{}'.format(ticker)
+
         try:
-            symbol = ujson.loads(HttpRequest(status_forcelist=[400, 404, 500]).get(url))
-        except HttpRequestException:
-            pass
-            # TODO exception?
+            symbol = ujson.loads(HttpRequest(status_forcelist=[400, 404, 500]).get(url).content)
+        except HttpRequestException as e:
+            st.logger.exception(e)
+            raise ExternalResourceError()
         else:
             return symbol
