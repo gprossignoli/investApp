@@ -12,34 +12,86 @@ Detalles de {{ticker}}
 <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-<script src="path/to/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.min.js"></script>
 
 <script type="text/javascript">
     $.get('{% url "index_closures" %}?ticker={{ticker}}', function (data) {
         var ctx = $("#closuresChart").get(0).getContext("2d");
+        var options = {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                zoom: {
+                    zoom: {
+                        enabled: true,
+                        mode: 'x',
+                    },
+                    limits: {
+                        y: {
+                            min: 0
+                        }
+                    },
+                }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: false,
+                    barPercentage: 10,
+                    ticks: {
+
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+
+                    }
+                }]
+            }
+        };
         new Chart(ctx, {
             type: 'line', data: data,
+            options: options
         });
     });
 
     $.get('{% url "index_returns" %}?ticker={{ticker}}', function (data) {
         var ctx = $("#returnsChart").get(0).getContext("2d");
+        var options = {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                zoom: {
+                    zoom: {
+                        enabled: true,
+                        mode: 'x',
+                    },
+                    limits: {
+                        y: {
+                            min: 0
+                        }
+                    },
+                }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: false,
+                    barPercentage: 10,
+                    ticks: {
+
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+
+                    }
+                }]
+            }
+        };
         new Chart(ctx, {
             type: 'bar', data: data,
-            options: {
-                plugins: {
-                    zoom: {
-                        pan: {
-                            enabled: true
-                        },
-                        zoom: {
-                            enabled: true,
-                            mode: 'xy',
-                            drag: true,
-                        }
-                    }
-                }
-            }
+            options: options
         });
     });
 
@@ -54,7 +106,8 @@ Detalles de {{ticker}}
                     <ul class="index_data">
                         <li>ticker: {{index.ticker}}</li>
                         <li><a id="stocks_link" href="{% url 'stocks' %}?exchange={{index.ticker}}">
-                            <p>Acciones</p></a>
+                                <p>Acciones</p>
+                            </a>
                         </li>
                     </ul>
                     <ul class="index_data">
@@ -70,9 +123,16 @@ Detalles de {{ticker}}
         </div>
         <div class="row" id="charts">
             <div class="col">
-                <canvas id="closuresChart" width="800" height="400"></canvas>
-                <canvas id="returnsChart" width="800" height="400"></canvas>
-
+                <div style="overflow-x: scroll">
+                    <div class="chart-container" position="relative">
+                        <canvas id="closuresChart" width="2400" height="600"></canvas>
+                    </div>
+                </div>
+                <div style="overflow-x: scroll">
+                    <div class="chart-container" position="relative">
+                        <canvas id="returnsChart" width="2400" height="600"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -43,7 +43,6 @@ class MarketsService:
     def get_symbol(self, ticker):
         try:
             symbol_data = self.symbols_dao.get_symbol(ticker)
-            # symbol_data['daily_returns'] = self.__clean_returns(symbol_data['daily_returns'])
 
         except ExternalResourceError:
             raise InternalServerError(error="Error: external resource")

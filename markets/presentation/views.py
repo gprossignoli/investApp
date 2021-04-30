@@ -168,7 +168,7 @@ class symbol_detail_returns(BaseLineChartView):
         return default_opt
 
     def get_labels(self):
-        return list(self._symbol['daily_returns'].keys())[:1000]
+        return list(self._symbol['daily_returns'].keys())
 
     def get_providers(self):
         return ['positive returns', 'negative returns']
@@ -184,4 +184,4 @@ class symbol_detail_returns(BaseLineChartView):
                 negatives.append(ret[0])
                 positives.append(0.0)
 
-        return [positives[:1000], negatives[:1000]]
+        return [positives, negatives]
