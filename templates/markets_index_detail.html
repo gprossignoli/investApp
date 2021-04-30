@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Detalles de {{ticker}}
+{% endblock %}
+
+{% block content %}
+
+<link href="{% static '/css/markets_index_detail.css' %}" rel="stylesheet">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+<script src="path/to/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.min.js"></script>
+
+<script type="text/javascript">
+    $.get('{% url "index_closures" %}?ticker={{ticker}}', function (data) {
+        var ctx = $("#closuresChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line', data: data,
+        });
+    });
+
+    $.get('{% url "index_returns" %}?ticker={{ticker}}', function (data) {
+        var ctx = $("#returnsChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'bar', data: data,
+            options: {
+                plugins: {
+                    zoom: {
+                        pan: {
+                            enabled: true
+                        },
+                        zoom: {
+                            enabled: true,
+                            mode: 'xy',
+                            drag: true,
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+</script>
+
+<div class="row" id="markets_list">
+    <div class="col-xl-12" id="index_col">
+        <div class="row">
+            <div class="col">
+                <h2 id="index_title">{{index.name}}</h2>
+                <div id="index_info">
+                    <ul class="index_data">
+                        <li>ticker: {{index.ticker}}</li>
+                        <li><a id="stocks_link" href="{% url 'stocks' %}?exchange={{index.ticker}}">
+                            <p>Acciones</p></a>
+                        </li>
+                    </ul>
+                    <ul class="index_data">
+                        <li>Primera fecha: {{index.first_date}}</li>
+                        <li>Ultima fecha: {{index.last_date}}</li>
+                    </ul>
+                    <ul class="index_data">
+                        <li>CAGR 3 años: {{index.cagr.3yr}}</li>
+                        <li>CAGR 5 años: {{index.cagr.5yr}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="charts">
+            <div class="col">
+                <canvas id="closuresChart" width="800" height="400"></canvas>
+                <canvas id="returnsChart" width="800" height="400"></canvas>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Lista de Acciones
+Detalles de {{ticker}}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@ Lista de Acciones
         var ctx = $("#closuresChart").get(0).getContext("2d");
         new Chart(ctx, {
             type: 'line', data: data,
-            
+
         });
     });
 

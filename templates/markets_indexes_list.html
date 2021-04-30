@@ -19,7 +19,7 @@ Lista de Mercados
                     {% for index in indexes %}
                     <li>
                         <div class="id_info">
-                            <a href="{% url 'stocks' %}?exchange={{ index.ticker }}">{{ index.ticker }}</a>
+                            <a href="{% url 'index' ticker=index.ticker%}">{{ index.ticker }}</a>
                             <p>{{ index.name }}</p>
                         </div>
                     </li>

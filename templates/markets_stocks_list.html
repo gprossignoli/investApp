@@ -20,8 +20,8 @@ Lista de Acciones
                     <li>
                         <div class="id_info">
                             <a href="{% url 'stock' ticker=stock.ticker%}">{{ stock.ticker }}</a>
-                            <p>{{ stock.isin }} </p>
                             <p>{{ stock.name }} </p>
+                            <p>Ultimo Cierre: {{stock.last_price.value}}</p>
                         </div>
                     </li>
                     {% endfor %}

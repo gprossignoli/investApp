@@ -1,0 +1,41 @@
+#index_col {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: #343a40;
+}
+
+#index_title{
+    color: yellow;
+}
+
+.index_data{
+    background-color: gray;
+    color: honeydew;
+}
+
+#index_info{
+    display: flex;
+    flex-direction: row;
+}
+
+#stocks_link {
+    color: yellow;
+}
+
+.chartWrapper {
+position: relative;
+}
+   
+.chartWrapper > canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+
+.chartAreaWrapper {
+    width: 600px;
+    overflow-x: scroll;
+}

@@ -16,10 +16,12 @@ class MarketsService:
         stocks = []
         for symbol in symbols:
             if symbol['exchange'] == exchange:
+                symbol['last_price']['value'] = symbol['last_price']['value']
                 stocks.append({
                     'ticker': symbol['ticker'],
                     'name': symbol['name'],
-                    'isin': symbol['isin']
+                    'isin': symbol['isin'],
+                    'last_price': symbol['last_price']
                 })
         return tuple(stocks)
 
@@ -32,19 +34,21 @@ class MarketsService:
         for index in symbols:
             indexes.append({
                 'ticker': index['ticker'],
-                'name': index['name']
+                'name': index['name'],
+                'last_price': index['last_price'],
+                'last_return': index['last_return']
             })
         return tuple(indexes)
 
-    def get_stock(self, ticker):
+    def get_symbol(self, ticker):
         try:
-            stock_data = self.symbols_dao.get_symbol(ticker)
-            stock_data['daily_returns'] = self.__clean_returns(stock_data['daily_returns'])
+            symbol_data = self.symbols_dao.get_symbol(ticker)
+            # symbol_data['daily_returns'] = self.__clean_returns(symbol_data['daily_returns'])
 
         except ExternalResourceError:
             raise InternalServerError(error="Error: external resource")
 
-        return stock_data
+        return symbol_data
 
     @staticmethod
     def __clean_returns(returns):
