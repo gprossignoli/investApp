@@ -4,6 +4,7 @@ from markets.presentation import views
 
 urlpatterns = [
     path('', views.list_indexes, name='indexes'),
+    path('search/', views.search_symbol, name='search_symbol'),
     path('stocks/', views.list_stocks, name='stocks'),
     path('stocks/<str:ticker>/', views.stock_detail, name='stock'),
     path('stocks/closures', views.stock_detail_closures.as_view(), name='stock_closures'),

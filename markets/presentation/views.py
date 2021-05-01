@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponseServerError, HttpResponse
+from django.http import HttpResponseServerError, HttpResponse, HttpResponseNotFound
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from chartjs.views.lines import BaseLineChartView
 
 from markets.business.markets_service import MarketsService
-from utils.exceptions import InternalServerError
+from utils.exceptions import InternalServerError, SymbolNotFoundError
 
 
 def list_indexes(request):
@@ -65,6 +65,26 @@ def list_stocks(request):
             context = {'stocks': stocks, 'has_next': stocks.has_next(), 'has_prev': stocks.has_previous(),
                        'exchange': exchange}
             return render(request, "markets_stocks_list.html", context=context)
+
+
+def search_symbol(request):
+    if request.method != 'GET':
+        return HttpResponse(status=405)
+
+    if request.method == 'GET':
+        try:
+            symbol = MarketsService().get_symbol(ticker=request.GET['query'].upper())
+        except InternalServerError:
+            return HttpResponseServerError()
+        except SymbolNotFoundError:
+            return HttpResponseNotFound("{} no encontrado".format(request.GET['query'].upper()))
+        else:
+            if symbol.get("exchange"):
+                context = {'stock': symbol, 'ticker': symbol['ticker']}
+                return render(request, "markets_stock_detail.html", context=context)
+            else:
+                context = {'index': symbol, 'ticker': symbol['ticker']}
+                return render(request, "markets_index_detail.html", context=context)
 
 
 def stock_detail(request, ticker):

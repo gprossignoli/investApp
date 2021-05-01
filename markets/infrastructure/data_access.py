@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 import ujson
 
-from utils.exceptions import ExternalResourceError
+from utils.exceptions import ExternalResourceError, SymbolNotFoundError
 from utils.http_request import HttpRequest, HttpRequestException
 from investapp import settings as st
 
@@ -64,7 +64,10 @@ class FincalcsDao(AbstractDao):
         url = self.base_url + st.FINCALCS_SYMBOLS_ENDPOINT + '/{}'.format(ticker)
 
         try:
-            symbol = ujson.loads(HttpRequest(status_forcelist=[400, 404, 500]).get(url).content)
+            resp = HttpRequest(status_forcelist=[400, 500]).get(url)
+            if resp.status_code == 404:
+                raise SymbolNotFoundError()
+            symbol = ujson.loads(resp.content)
         except HttpRequestException as e:
             st.logger.exception(e)
             raise ExternalResourceError()

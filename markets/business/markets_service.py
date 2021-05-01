@@ -1,7 +1,7 @@
 import numpy as np
 
 from markets.infrastructure.data_access import DataReaderAbsFact
-from utils.exceptions import ExternalResourceError, InternalServerError
+from utils.exceptions import ExternalResourceError, InternalServerError, SymbolNotFoundError
 
 
 class MarketsService:
@@ -46,7 +46,8 @@ class MarketsService:
 
         except ExternalResourceError:
             raise InternalServerError(error="Error: external resource")
-
+        except SymbolNotFoundError:
+            raise
         return symbol_data
 
     @staticmethod
