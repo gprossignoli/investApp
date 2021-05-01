@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseServerError, HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseServerError, HttpResponse, HttpResponseNotFound, Http404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from chartjs.views.lines import BaseLineChartView
@@ -77,7 +77,7 @@ def search_symbol(request):
         except InternalServerError:
             return HttpResponseServerError()
         except SymbolNotFoundError:
-            return HttpResponseNotFound("{} no encontrado".format(request.GET['query'].upper()))
+            raise Http404()
         else:
             if symbol.get("exchange"):
                 context = {'stock': symbol, 'ticker': symbol['ticker']}

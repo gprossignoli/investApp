@@ -43,7 +43,7 @@ class MarketsService:
     def get_symbol(self, ticker):
         try:
             symbol_data = self.symbols_dao.get_symbol(ticker)
-
+            symbol_data['cagr'] = {k: round(float(v) * 100, 4) for k,v in symbol_data['cagr'].items()}
         except ExternalResourceError:
             raise InternalServerError(error="Error: external resource")
         except SymbolNotFoundError:
