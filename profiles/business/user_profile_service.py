@@ -29,4 +29,3 @@ class UserProfileService:
             risk_level = st.RISK_PROFILE.ALTO
 
         return {'name': risk_level.name, 'value': risk_level.value}, total_score
-

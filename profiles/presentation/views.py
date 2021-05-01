@@ -7,6 +7,7 @@ from django.views.generic import DeleteView, UpdateView
 
 from profiles.business.models import UserProfile
 from profiles.presentation.forms import RegisterForm
+from markets.business.markets_service import MarketsService
 from investapp import settings as st
 
 
@@ -62,13 +63,18 @@ def user_profile(request):
 
     if request.method == 'GET':
         user = request.user
+        index_data = MarketsService().get_symbol(user.fav_index)
+        last_return = round(float(index_data['daily_returns'][index_data['last_date']]) * 100, 4)
+        last_price = index_data['closures'][index_data['last_date']]
+        index_growth = True if float(last_return) > 0 else False
         return render(request, 'user_profile.html', {'user_name': user.username,
                                                      'user_risk_lvl': st.RISK_PROFILE(user.risk_level).name,
                                                      'user_info': user,
                                                      'risk_max_lvl': st.RISK_MAX_LVL,
                                                      'min_risk_lvl': st.RISK_MIN_LVL,
-                                                     'index_growth': True, 'index_value': 0.54,
-                                                     'index_last_value': 8000, 'index_points_value': 0.94})
+                                                     'index_name': index_data['name'].upper(),
+                                                     'index_growth': index_growth, 'index_value': last_return,
+                                                     'index_last_value': last_price})
     elif request.method == 'PUT':
         pass
 

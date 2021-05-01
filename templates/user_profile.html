@@ -71,14 +71,10 @@ perfil de {{ user_name }}
             <div class="col" id="favorite_market_summary">
                 <div class="row">
                     <div class="col" id="market_title">
-                        <h1>IBEX 35</h1>
+                        <h1>{{index_name}}</h1>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col market_index_data">
-                        <span class="price_row">Puntos</span>
-                        <span class="index_last_value">{{index_last_value}}</span>
-                    </div>
                     <div class="col market_index_data">
                         <span class="price_row">Variación</span>
                         {% if index_growth %}
@@ -96,9 +92,15 @@ perfil de {{ user_name }}
                     <div class="col market_index_data">
                         <span class="price_row">Puntos</span>
                         {% if index_growth %}
-                        <span class="index_points_value">+{{index_points_value}}</span>
+                        <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
+                                src="{% static 'images/index_up.svg' %}">
+                            <span class="index_points_value">+{{index_last_value}}</span>
+                        </div>
                         {% else %}
-                        <span class="index_points_value">{{index_points_value}}</span>
+                        <div class="d-inline-block align-middle mr-2"><img width="20" height="20" class="index_growth"
+                                src="{% static 'images/index_down.svg' %}">
+                            <span class="index_points_value">{{index_last_value}}</span>
+                        </div>
                         {% endif %}
                         <span>pts</span>
                     </div>
