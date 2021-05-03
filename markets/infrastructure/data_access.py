@@ -80,8 +80,8 @@ class FincalcsDao(AbstractDao):
             tickers = ','.join(stocks)
             sps = ['{}:{}'.format(k,v) for k,v in shares_per_stock.items()]
             sps = ','.join(sps)
-            body = {'tickers': tickers, 'sharesPerStock': sps, 'first_date': first_date_data,
-                    'last_date': last_date_data}
+            body = {'tickers': tickers, 'sharesPerStock': sps, 'initial_date': first_date_data,
+                    'end_date': last_date_data}
             resp = HttpRequest(status_forcelist=[400, 500]).post(url, body=body)
             if resp.status_code == 404:
                 raise SymbolNotFoundError()

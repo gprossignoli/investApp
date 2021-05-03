@@ -299,12 +299,13 @@ def portfolio_builder(request):
             return render(request, 'portfolio.html',
                           context={'symbols': [{'ticker': k, 'weight': round(float(v) * 100, 1)} for k,v in portfolio['weights'].items()],
                                    'first_date': portfolio['first_date'], 'last_date': portfolio['last_date'],
-                                   'annualized_returns': round(float(portfolio['annualized_returns']), 4) * 100,
-                                   'annualized_volatility': round(float(portfolio['annualized_volatility']), 4) * 100,
-                                   'drawdown': round(float(portfolio['maximum_drawdown']), 4) * 100,
+                                   'annualized_returns': round(float(portfolio['annualized_returns']) * 100, 4),
+                                   'annualized_volatility': round(float(portfolio['annualized_volatility']) * 100, 4),
+                                   'drawdown': round(float(portfolio['maximum_drawdown']) * 100, 4),
                                    'sharpe_ratio': round(float(portfolio['sharpe_ratio']), 4),
                                    'calmar_ratio': round(float(portfolio['calmar_ratio']), 4),
-                                   'sortinos': [{'ticker': k, 'value':  round(float(v),4)} for k,v in portfolio['sortino_ratio'].items()],
+                                   'sortinos': [{'ticker': k, 'value':  round(float(v),4)}
+                                                for k,v in portfolio['sortino_ratio'].items()],
                                    'returnsData': portfolio_returns, 'volatilityData': portfolio_volatility})
         else:
             return render(request, 'portfolio_builder.html', {'form': form})
