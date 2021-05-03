@@ -7,5 +7,6 @@ class InternalServerError(Exception):
         super(InternalServerError, self).__init__()
         self.error_msg = error
 
+
 class SymbolNotFoundError(Exception):
     pass

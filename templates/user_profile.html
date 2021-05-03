@@ -31,39 +31,6 @@ perfil de {{ user_name }}
                     </div>
                 </li>
             </ul>
-            <div id="portfolio_summary">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Accion</th>
-                            <th scope="col">ISIN</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Variacion</th>
-                            <th scope="col">>Volatilidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Acciona</th>
-                            <td>ANA</td>
-                            <td>137.2</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
     <div class="col">
@@ -74,7 +41,7 @@ perfil de {{ user_name }}
                         <h1>{{index_name}}</h1>
                     </div>
                 </div>
-                <div class="row">
+                <div style="margin-bottom: 3.4em;" class="row">
                     <div class="col market_index_data">
                         <span class="price_row">Variación</span>
                         {% if index_growth %}
@@ -107,34 +74,34 @@ perfil de {{ user_name }}
                 </div>
                 <hr>
             </div>
-            <div class="w-100"></div>
-            <div class="col" id="risk_lvl_col">
-                <div class="risk_lvl">
-                    <div class="risk col">
-                        <h1 id="user_risk_lvl">{{user_risk_lvl}}</h1>
-                        <div>
-                            <form action="{% url 'risk_profile' %}" method="GET">
-                                <button type="submit" class="btn btn-primary risk_lvl_btn"> Cambiar </button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="risk_lvl_info">
-                        <p>El perfil de riesgo indica la capacidad del inversor de asumir pérdidas.
-                            Existe una estrecha relación entre rentabilidad y riesgo.<br>
-                            Para tener la posibilidad de obtener una mayor rentabilidad
-                            es necesario asumir un mayor riesgo.
-                            En investapp se establecen tres niveles: <br>BAJO, MODERADO y ALTO.
-                        </p>
-                        <p>
-                            Toda inversión tiene un riesgo asociado.
-                            Este riesgo se define como la probabilidad de
-                            que el rendimiento sea menor al esperado. <br>
-                            En general, las inversiones con mayor rendimiento esperado, tienen mayor riesgo
-                            asociado.
-                        </p>
-                    </div>
-
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col" id="risk_lvl_col">
+        <div class="risk_lvl">
+            <div class="risk col">
+                <h1 id="user_risk_lvl">{{user_risk_lvl}}</h1>
+                <div>
+                    <form action="{% url 'risk_profile' %}" method="GET">
+                        <button type="submit" class="btn btn-primary risk_lvl_btn"> Cambiar </button>
+                    </form>
                 </div>
+            </div>
+            <div class="risk_lvl_info">
+                <p>El perfil de riesgo indica la capacidad del inversor de asumir pérdidas.
+                    Existe una estrecha relación entre rentabilidad y riesgo.<br>
+                    Para tener la posibilidad de obtener una mayor rentabilidad
+                    es necesario asumir un mayor riesgo.
+                    En investapp se establecen tres niveles: <br>BAJO, MODERADO y ALTO.
+                </p>
+                <p>
+                    Toda inversión tiene un riesgo asociado.
+                    Este riesgo se define como la probabilidad de
+                    que el rendimiento sea menor al esperado. <br>
+                    En general, las inversiones con mayor rendimiento esperado, tienen mayor riesgo
+                    asociado.
+                </p>
             </div>
         </div>
     </div>

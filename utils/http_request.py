@@ -1,4 +1,5 @@
 import requests
+import ujson
 from requests.adapters import HTTPAdapter
 from requests.exceptions import RequestException
 from urllib3 import Retry
@@ -25,6 +26,15 @@ class HttpRequest:
             if timeout is not None:
                 return self.session.get(url=url, timeout=timeout)
             return self.session.get(url=url)
+        except RequestException as e:
+            st.logger.exception(e)
+            raise
+
+    def post(self, url: str, timeout=None, body=dict):
+        try:
+            if timeout is not None:
+                return self.session.post(url=url, timeout=timeout, json=ujson.dumps(body))
+            return self.session.post(url=url, data=ujson.dumps(body))
         except RequestException as e:
             st.logger.exception(e)
             raise

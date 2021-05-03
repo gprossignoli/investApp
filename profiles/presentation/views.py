@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.views.generic import DeleteView, UpdateView
 
 from profiles.business.models import UserProfile
-from profiles.presentation.forms import RegisterForm
+from profiles.presentation.forms import RegisterForm, UserProfileUpdateForm
 from markets.business.markets_service import MarketsService
 from investapp import settings as st
 
@@ -99,19 +99,24 @@ class UserProfilePermissionsMixin(AccessMixin):
 class DeleteUserProfile(LoginRequiredMixin, UserProfilePermissionsMixin, DeleteView):
     model = UserProfile
     template_name = "user_profile_delete.html"
-
     success_url = "/"
 
 
 class UpdateUserProfile(LoginRequiredMixin, UserProfilePermissionsMixin, UpdateView):
     model = UserProfile
+    form_class = UserProfileUpdateForm
     template_name = "user_profile_update.html"
-    fields = ['username', 'email']
     success_url = "/profiles/user"
+
+    def get_form(self, form_class=None):
+        form = super(UpdateUserProfile, self).get_form()
+        form.fields['fav_index'].label = 'Indice Preferido'
+        return form
 
     def dispatch(self, request, *args, **kwargs):
         if request.method == "POST":
             if UserProfile.objects.filter(username=request.POST['username']).exists() and \
                     (UserProfile.objects.get_by_natural_key(username=request.POST['username']).pk is not kwargs['pk']):
                 return self.handle_no_permission()
+
         return super(UpdateUserProfile, self).dispatch(request, *args, **kwargs)

@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponseServerError, HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponseServerError, HttpResponse, Http404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from chartjs.views.lines import BaseLineChartView
 
 from markets.business.markets_service import MarketsService
+from markets.presentation.forms import PortfolioBuilderForm
 from utils.exceptions import InternalServerError, SymbolNotFoundError
 
 
@@ -205,3 +206,105 @@ class symbol_detail_returns(BaseLineChartView):
                 positives.append(0.0)
 
         return [positives, negatives]
+
+
+class SymbolDetailReturns(BaseLineChartView):
+    def __init__(self, returns):
+        super(SymbolDetailReturns, self).__init__()
+        self._all_rets = [(round(float(v) * 100, 4), idx) if v != "null" else (0.0, idx) for idx, v
+                          in returns.items()]
+        self._x_axis_data = returns.keys()
+
+    def get_datasets(self):
+        datasets = []
+        color_generator = [(0,128,0), (255,0,0)]
+        data = self.get_data()
+        providers = self.get_providers()
+        num = len(providers)
+        for i, entry in enumerate(data):
+            color = color_generator[i]
+            dataset = {"data": [abs(n) for n in entry]}
+            dataset.update(self.get_dataset_options(i, color))
+            if i < num:
+                dataset["label"] = providers[i]  # series labels for Chart.js
+                dataset["name"] = providers[i]
+            datasets.append(dataset)
+        return datasets
+
+    def get_dataset_options(self, index, color):
+        default_opt = super(SymbolDetailReturns, self).get_dataset_options(index, color)
+        return default_opt
+
+    def get_labels(self):
+        return list(self._x_axis_data)
+
+    def get_providers(self):
+        return ['positive returns', 'negative returns']
+
+    def get_data(self):
+        positives = []
+        negatives = []
+        for ret in self._all_rets:
+            if ret[0] >= 0:
+                positives.append(ret[0])
+                negatives.append(0.0)
+            else:
+                negatives.append(ret[0])
+                positives.append(0.0)
+
+        return [positives, negatives]
+
+
+class PortfolioVolatility(BaseLineChartView):
+    def __init__(self, volatility):
+        super(PortfolioVolatility, self).__init__()
+        self._volatility = volatility
+
+    def get_dataset_options(self, index, color):
+        default_opt = super(PortfolioVolatility, self).get_dataset_options(index, color)
+        default_opt['pointBorderWidth'] = '0.1'
+        default_opt['pointRadius'] = '1'
+
+        return default_opt
+
+    def get_labels(self):
+        return list(self._volatility.keys())
+
+    def get_providers(self):
+        return ['daily Volatilities']
+
+    def get_data(self):
+        return [list(self._volatility.values())]
+
+
+def portfolio_builder(request):
+    if request.method == "GET":
+        form = PortfolioBuilderForm()
+
+        return render(request, 'portfolio_builder.html', context={'form': form})
+
+    elif request.method == "POST":
+        form = PortfolioBuilderForm(data=request.POST)
+
+        if form.is_valid():
+            input = form.cleaned_data
+            stocks = input['stocks']
+            portfolio = MarketsService().create_portfolio(stocks=[s[1] for s in stocks],
+                                                          shares_per_stock={s[1]: s[0] for s in stocks},
+                                                          first_date=input['first_date'], last_date=input['last_date'])
+            returns = SymbolDetailReturns(returns=portfolio['returns']).get_context_data()
+            portfolio_returns = {'datasets': returns['datasets'], 'labels': returns['labels']}
+            volatility = PortfolioVolatility(volatility=portfolio['volatility']).get_context_data()
+            portfolio_volatility = {'datasets': volatility['datasets'], 'labels': volatility['labels']}
+            return render(request, 'portfolio.html',
+                          context={'symbols': [{'ticker': k, 'weight': round(float(v) * 100, 1)} for k,v in portfolio['weights'].items()],
+                                   'first_date': portfolio['first_date'], 'last_date': portfolio['last_date'],
+                                   'annualized_returns': round(float(portfolio['annualized_returns']), 4) * 100,
+                                   'annualized_volatility': round(float(portfolio['annualized_volatility']), 4) * 100,
+                                   'drawdown': round(float(portfolio['maximum_drawdown']), 4) * 100,
+                                   'sharpe_ratio': round(float(portfolio['sharpe_ratio']), 4),
+                                   'calmar_ratio': round(float(portfolio['calmar_ratio']), 4),
+                                   'sortinos': [{'ticker': k, 'value':  round(float(v),4)} for k,v in portfolio['sortino_ratio'].items()],
+                                   'returnsData': portfolio_returns, 'volatilityData': portfolio_volatility})
+        else:
+            return render(request, 'portfolio_builder.html', {'form': form})

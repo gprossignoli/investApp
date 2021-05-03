@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Portfolio
+{% endblock %}
+
+{% block content %}
+<link href="{% static '/css/portfolio.css' %}" rel="stylesheet">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.7.7/chartjs-plugin-zoom.min.js"></script>
+
+<div class="row" id="markets_list">
+    <div class="col-xl-12" id="portfolio_col">
+        <div class="row">
+            <div class="col">
+                <h2 id="title">Portfolio</h2>
+                <div id="info">
+                    <ul class="data">
+
+                        {% for symbol in symbols %}
+                        <li>
+                            <div class="id_info">
+                                <a href="{% url 'stock' ticker=symbol.ticker%}">{{ symbol.ticker }}</a>
+                                <p>{{ symbol.weight }}%</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="data">
+                        <li>Primera fecha: {{first_date}}</li>
+                        <li>Ultima fecha: {{last_date}}</li>
+                    </ul>
+                    <ul class="data">
+                        <li>Rentabilidad anualizada: {{annualized_returns}} %</li>
+                        <li>Volatilidad anualizada: {{annualized_volatility}} %</li>
+                        <li>Drawdown Máximo: {{ drawdown }} %</li>
+                        <li>Sharpe ratio: {{sharpe_ratio}}</li>
+                        <li>Calmar Ratio: {{calmar_ratio}}</li>
+                    </ul>
+                    <ul class="data">
+                        {% for index in sortinos %}
+                        <li>
+                            <div class="id_info">
+                                Sortino ratio: <a href="{% url 'index' ticker=index.ticker%}">{{ index.ticker }}</a>
+                                <p>{{ index.value }}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="charts">
+            <div class="col">
+                <div style="overflow-x: scroll">
+                    <div class="chart-container" position="relative">
+                        <canvas id="returnsChart" width="2400" height="600"></canvas>
+                    </div>
+                </div>
+                <div style="overflow-x: scroll">
+                    <div class="chart-container" position="relative">
+                        <canvas id="volatilityChart" width="2400" height="600"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var data = {{volatilityData|safe}};
+    function closes(data) {
+        var ctx = $("#volatilityChart").get(0).getContext("2d");
+        var options = {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                zoom: {
+                    zoom: {
+                        enabled: true,
+                        mode: 'x',
+                    },
+                    limits: {
+                        y: {
+                            min: 0
+                        }
+                    },
+                }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: false,
+                    barPercentage: 10,
+                    ticks: {
+
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+
+                    }
+                }]
+            }
+        };
+        new Chart(ctx, {
+            type: 'line', data: data,
+            options: options
+        });
+    };
+    closes(data);
+    var data = {{returnsData|safe}};
+    function rets(data) {
+        var ctx = $("#returnsChart").get(0).getContext("2d");
+        var options = {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                zoom: {
+                    zoom: {
+                        enabled: true,
+                        mode: 'x',
+                    },
+                    limits: {
+                        y: {
+                            min: 0
+                        }
+                    },
+                }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: false,
+                    barPercentage: 10,
+                    ticks: {
+
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+
+                    }
+                }]
+            }
+        };
+        new Chart(ctx, {
+            type: 'bar', data: data,
+            options: options
+        });
+    };
+    rets(data)
+</script>
+
+
+{% endblock %}

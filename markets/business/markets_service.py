@@ -1,3 +1,5 @@
+import datetime
+
 import numpy as np
 
 from markets.infrastructure.data_access import DataReaderAbsFact
@@ -21,7 +23,8 @@ class MarketsService:
                     'ticker': symbol['ticker'],
                     'name': symbol['name'],
                     'isin': symbol['isin'],
-                    'last_price': symbol['last_price']
+                    'last_price': symbol['last_price'],
+                    'exchange': symbol['exchange']
                 })
         return tuple(stocks)
 
@@ -43,12 +46,19 @@ class MarketsService:
     def get_symbol(self, ticker):
         try:
             symbol_data = self.symbols_dao.get_symbol(ticker)
-            symbol_data['cagr'] = {k: round(float(v) * 100, 4) for k,v in symbol_data['cagr'].items()}
+            symbol_data['cagr'] = {k: round(float(v) * 100, 4) for k, v in symbol_data['cagr'].items()}
         except ExternalResourceError:
             raise InternalServerError(error="Error: external resource")
         except SymbolNotFoundError:
             raise
         return symbol_data
+
+    def create_portfolio(self, stocks: list, shares_per_stock: dict,
+                         first_date: datetime.date, last_date=datetime.date):
+        first_date_data = first_date.strftime("%d-%m-%Y")
+        last_date_data = last_date.strftime("%d-%m-%Y")
+        portfolio_data = self.symbols_dao.get_portfolio(stocks, shares_per_stock, first_date_data, last_date_data)
+        return portfolio_data
 
     @staticmethod
     def __clean_returns(returns):

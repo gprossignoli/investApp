@@ -13,4 +13,5 @@ urlpatterns = [
     path('indexes/<str:ticker>/', views.index_detail, name='index'),
     path('indexes/closures', views.symbol_detail_closures.as_view(), name='index_closures'),
     path('indexes/returns', views.symbol_detail_returns.as_view(), name='index_returns'),
+    path('portfolio/', views.portfolio_builder, name='portfolio_builder'),
 ]

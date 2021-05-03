@@ -1,0 +1,29 @@
+#portfolio_col {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: #343a40;
+}
+
+#title{
+    color: yellow;
+}
+.id_info a {
+    color: yellow;
+}
+
+.data{
+    background-color: gray;
+    color: honeydew;
+    padding-right: 1em;
+}
+
+.data li{
+    margin-top: 0.5em;
+}
+
+#info{
+    display: flex;
+    flex-direction: row;
+}
