@@ -2,22 +2,34 @@ version: "3.8"
    
 services:
   db:
-    image: mysql
+    image: mysql:8.0.24
+    container_name: investapp_db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    expose: 
+      - MYSQL_ROOT_PASSWORD=pass1234
+      - MYSQL_DATABASE=investapp
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=investappadmin
+    ports:
+      - "3306:3306"
+    expose:
       - "3306"
+    networks:
+      - invest-system
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8002
     volumes:
       - .:/investApp
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_started
+    networks:
+      - invest-system
+
+networks:
+  invest-system:
+    external: true
