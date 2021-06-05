@@ -132,10 +132,10 @@ class stock_detail_closures(BaseLineChartView):
         return list(self._stock['closures'].keys())
 
     def get_providers(self):
-        return ['daily closes', 'dividends']
+        return ['dividends', 'daily closes']
 
     def get_data(self):
-        return [list(self._stock['closures'].values()), list(self._stock['dividends'].values())]
+        return [list(self._stock['dividends'].values()), list(self._stock['closures'].values())]
 
 
 class symbol_detail_closures(BaseLineChartView):
