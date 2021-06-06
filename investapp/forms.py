@@ -144,7 +144,7 @@ class RiskProfileTestForm(forms.Form):
                        value="3")
 
     class Question16(DjangoChoices):
-        a = ChoiceItem(label="Una ganacia segura de 500€.",
+        a = ChoiceItem(label="Una ganancia segura de 500€.",
                        value="1")
         b = ChoiceItem(label="Una probabilidad del 50% de ganar 1.000€ y un 50% de no ganar nada.",
                        value="3")
@@ -195,7 +195,7 @@ class RiskProfileTestForm(forms.Form):
                                  "A tres semanas antes de irse, pierde su empleo, ¿Qué haría?")
 
     q4 = forms.ChoiceField(choices=Question4.choices, widget=forms.RadioSelect,
-                           label="Considere la siguiente afirmación, 'Es difícil que deje pasar una oferta.'")
+                           label="Considere la siguiente afirmación, 'Es difícil que deje pasar una oferta")
 
     q5 = forms.ChoiceField(choices=Question5.choices, widget=forms.RadioSelect,
                            label="Recibe 20.000€ para dedicarlos a inversión, ¿qué haría?")
@@ -244,14 +244,14 @@ class RiskProfileTestForm(forms.Form):
                                   "¿Qué haría?")
 
     q16 = forms.ChoiceField(choices=Question16.choices, widget=forms.RadioSelect,
-                            label="Le regalan 1.000€, elija una de las dos opciones.")
+                            label="Le regalan 1.000€, elija una de las dos opciones:")
 
     q17 = forms.ChoiceField(choices=Question17.choices, widget=forms.RadioSelect,
-                            label="Le regalan 2.000€, elija una de las dos opciones.")
+                            label="Le regalan 2.000€, elija una de las dos opciones:")
 
     q18 = forms.ChoiceField(choices=Question18.choices, widget=forms.RadioSelect,
                             label="Un pariente le deja una herencia de 100.000€, suponga que decide invertir todo. "
-                                  "¿Qué opción elegiría?.")
+                                  "¿Qué opción elegiría?")
 
     q19 = forms.ChoiceField(choices=Question19.choices, widget=forms.RadioSelect,
                             label="Si tiene que invertir 20.000€, ¿cómo distribuiría su cartera según el riesgo?")
