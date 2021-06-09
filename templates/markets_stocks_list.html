@@ -41,7 +41,7 @@ Lista de Acciones
                 {% if stocks.number == i %}
                 <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
                 {% else %}
-                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                <li><a href="?exchange={{ exchange }}&page={{ i }}">{{ i }}</a></li>
                 {% endif %}
                 {% endfor %}
                 {% if stocks.has_next %}

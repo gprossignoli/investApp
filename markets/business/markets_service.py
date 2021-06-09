@@ -18,7 +18,7 @@ class MarketsService:
         stocks = []
         for symbol in symbols:
             if symbol['exchange'] == exchange:
-                symbol['last_price']['value'] = symbol['last_price']['value']
+                symbol['last_price']['value'] = str(round(float(symbol['last_price']['value']) * 100, 4))
                 stocks.append({
                     'ticker': symbol['ticker'],
                     'name': symbol['name'],
