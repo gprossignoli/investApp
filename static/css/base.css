@@ -1,3 +1,4 @@
+
 body {
     background: rgb(255,203,0);
     background: linear-gradient(180deg, rgba(255,203,0,1) 1%, rgba(121,119,9,1) 49%, rgba(0,0,0,1) 100%); 
@@ -64,6 +65,7 @@ body {
 
 #footer {
     margin-top: 2em;
+    margin-bottom: 0em;
 }
 
 
@@ -78,4 +80,15 @@ body {
 
 .errorlist li{
     color: red;
+}
+
+#welcome{
+    margin: 1em;
+    padding: 0.5em;
+    background-color: #343a40;
+    color: honeydew;
+}
+
+#welcome h1{
+    color: yellow;
 }
