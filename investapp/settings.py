@@ -15,12 +15,13 @@ from enum import Enum
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
+from environ import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ENV_FILE_PATH = os.path.abspath(os.path.join(BASE_DIR, ".env"))
 
 # LOGGING CONFIG
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('findata')
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
@@ -45,16 +46,29 @@ logger.addHandler(debug_logger)
 logger.addHandler(info_logger)
 logger.addHandler(error_logger)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+env = environ.Env(
+    MYSQL_NAME=(str, ""),
+    MYSQL_ROOT_PASSWORD=(str, ""),
+    MYSQL_DATABASE=(str, ""),
+    MYSQL_USER=(str, ""),
+    MYSQL_PASSWORD=(str, ""),
+    MYSQL_PORT=(int, None),
+    DEBUG=(str, ""),
+    SECRET_KEY=(str, ""),
+    ALLOWED_HOSTS=([str], []),
+    FINCALCS_HOST=(str, "")
+)
+
+env.read_env(ENV_FILE_PATH)
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't3=iwr8^i&_dl=68r(7mn#)4j%sq1baao6418amt1=k+hh_0m1'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -111,11 +125,11 @@ WSGI_APPLICATION = 'investapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'investapp',
-        'USER': 'investapp_admin',
-        'PASSWORD': 'InvestAppPass',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': env("MYSQL_NAME"),
+        'USER': env("MYSQL_USER"),
+        'PASSWORD': env("MYSQL_PASSWORD"),
+        'HOST': env("MYSQL_HOST"),
+        'PORT': env("MYSQL_PORT"),
     }
 }
 
@@ -179,7 +193,6 @@ GROUPS_LEFT_LIMITS = Enum('RISK_PROFILE', {'BAJO': MIN_TEST_SCORE,
                                            'ALTO': (MIN_TEST_SCORE + 2*GROUP_SEGMENT_LENGTH) + 1})
 
 # Fincalcs connection data
-
-FINCALCS_HOST = 'http://localhost:8001'
+FINCALCS_HOST = env("FINCALCS_HOST")
 FINCALCS_SYMBOLS_ENDPOINT = '/symbols'
 FINCALCS_PORTFOLIO_ENDPOINT = '/portfolio'
