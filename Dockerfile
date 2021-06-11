@@ -19,7 +19,6 @@ COPY templates ./templates
 COPY utils ./utils
 RUN touch investapp.log investapp_errors.log
 COPY manage.py .
-COPY db.sqlite3 .
 COPY .env .
 
 RUN chown -R investappuser .

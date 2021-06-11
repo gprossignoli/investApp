@@ -7,10 +7,10 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=pass1234
-      - MYSQL_DATABASE=investapp
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=investappadmin
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     expose:
@@ -19,7 +19,7 @@ services:
       - invest-system
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8002
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/investApp
     ports:
