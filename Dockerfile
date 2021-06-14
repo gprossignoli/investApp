@@ -20,6 +20,7 @@ COPY utils ./utils
 RUN touch investapp.log investapp_errors.log
 COPY manage.py .
 COPY .env .
+COPY entrypoint.sh ./entrypoint.sh
 
 RUN chown -R investappuser .
 RUN chmod -R 700 .
